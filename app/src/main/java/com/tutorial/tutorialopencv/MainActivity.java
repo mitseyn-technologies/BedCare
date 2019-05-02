@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
+        //Comentario Git
 
         if(OpenCVLoader.initDebug()) Toast.makeText(getApplicationContext(),"OpenCV Working",Toast.LENGTH_LONG).show();
 
