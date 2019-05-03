@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,7 +28,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView img_1, img_2;
     private Bitmap BM_img, BM_img_1;
 
     @SuppressLint("ResourceType")
@@ -34,44 +35,93 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        //Comentario Git
 
         if(OpenCVLoader.initDebug()) Toast.makeText(getApplicationContext(),"OpenCV Working",Toast.LENGTH_LONG).show();
 
         else Toast.makeText(getApplicationContext(),"OpenCV Not Working",Toast.LENGTH_LONG).show();
 
+        //Declaración de imagenes
         BM_img = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.hand);
 
         BM_img_1 = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.hand_two);
 
+        //Comprueba que las imagenes estén OK
+        imageCheck(BM_img, BM_img_1);
 
+        //Botones para activar los métodos
+        Button concat_button = findViewById(R.id.cctn_btn);
+        concat_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Llama funcion para combinar imagenes
+                Bitmap result = combineImages(BM_img, BM_img_1);
+                //Muestra y guarda la imagen
+                showImage(result);
+            }
+        });
 
-        if (BM_img_1 == null){
+        Button overlap_button = findViewById(R.id.ovlp_btn);
+        overlap_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Llama funcion para superponer imagenes
+                Bitmap result = overlapImages(BM_img, BM_img_1);
+                //Muestra y guarda la imagen
+                showImage(result);
+            }
+        });
+    }
 
-            Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_LONG).show();
+    public void imageCheck(Bitmap img1, Bitmap img2){
+        //Comprobación de las imagenes
+        if (img1 == null){
+            Toast.makeText(getApplicationContext(),"Error, no se pudo leer la imagen: " + BM_img,Toast.LENGTH_LONG).show();
         }
+        else if (img2 == null){
+            Toast.makeText(getApplicationContext(),"Error, no se pudo leer la imagen: " + BM_img_1,Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Imagenes OK",Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        Bitmap result = combineImages(BM_img,BM_img_1);
-
+    public void showImage(Bitmap result){
+        //Obtiene el imageView
         ImageView image = findViewById(R.id.imgView);
-
+        //Muestra la imagen en el imageView
         image.setImageBitmap(result);
-
+        //Guarda la imagen en el celular
         saveToInternalStorage(result);
+    }
 
+    //Método para superponer imagenes
+    public Bitmap overlapImages(Bitmap firstImage, Bitmap secondImage){
 
+        Bitmap oi;
+
+        oi = Bitmap.createBitmap(firstImage.getWidth(), firstImage.getHeight(), firstImage.getConfig());
+        Canvas canvas = new Canvas(oi);
+        //Primera imagen. No modificar valores.
+        canvas.drawBitmap(firstImage, 0f, 0f, null);
+        /*Segunda imagen:
+            -El primer valor numérico indica que tan a la izquierda será desplazada la imagen.
+            -El segundo valor numérico indica que tan hacia abajo será desplazada la imagen.
+            -Los valores no indican pixeles (aún no estoy seguro que indican).
+        */
+        canvas.drawBitmap(secondImage, 0f, 40f, null);
+        return oi;
     }
 
 
-    //Metodo para Concatenar imagenes
+    //Método para concatenar imagenes
     public Bitmap combineImages(Bitmap firstImage, Bitmap secondImage){
 
-        Bitmap cs = null;//nuevo BitMap
+        //Nuevo Bitmap
+        Bitmap cs;
 
-        int width, height = 0;//nuebo ancho y largo
+        //Nuevo ancho y largo
+        int width, height;
 
         if(firstImage.getWidth() > secondImage.getWidth()) {
             width = firstImage.getWidth() + secondImage.getWidth();
@@ -95,14 +145,14 @@ public class MainActivity extends AppCompatActivity {
     private void saveToInternalStorage(Bitmap bitmap){
         String dir = Environment.getExternalStorageDirectory()+ File.separator+"DCIM/bedCare";
 
-        //createfolder
+        //create folder
         File folder = new File(dir);
         if(!folder.exists()){
             folder.mkdirs();
             Toast.makeText(getApplicationContext(),"I am in if",
                     Toast.LENGTH_LONG).show();
         }
-        //creatname file
+        //create name file
         String simpleDate=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String nameImage="STE_"+simpleDate;
 
