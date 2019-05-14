@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
         File folder = new File(dir);
         if(!folder.exists()){
             folder.mkdirs();
-            Toast.makeText(getApplicationContext(),"I am in if",
-                    Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(),"I am in if",
+                   //Toast.LENGTH_LONG).show();
         }
         //create name file
         String simpleDate=new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
