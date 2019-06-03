@@ -10,12 +10,12 @@
     <ImageView
         android:id="@+id/imgView"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -34,6 +34,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Superponer" />
+
+        <Button
+            android:id="@+id/detection_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Modo Deteccion"
+            tools:text="Modo Deteccion" />
+
+        <Button
+            android:id="@+id/paint_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pintar" />
+
     </LinearLayout>
 
 </LinearLayout>
