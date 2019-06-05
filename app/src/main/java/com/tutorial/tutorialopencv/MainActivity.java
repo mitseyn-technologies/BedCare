@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.Point;
@@ -39,12 +40,14 @@ import java.util.Date;
 import java.util.Random;
 
 import static org.opencv.core.Core.NORM_MINMAX;
+import static org.opencv.core.Core.minMaxLoc;
 import static org.opencv.core.Core.normalize;
 import static org.opencv.core.CvType.CV_32F;
 import static org.opencv.core.CvType.CV_32FC1;
 import static org.opencv.core.CvType.CV_64FC1;
 import static org.opencv.core.CvType.CV_8U;
 import static org.opencv.core.CvType.CV_8UC1;
+import static org.opencv.core.CvType.CV_8UC3;
 import static org.opencv.imgcodecs.Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE;
 import static org.opencv.imgcodecs.Imgcodecs.imread;
 import static org.opencv.imgcodecs.Imgcodecs.imwrite;
@@ -265,15 +268,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //4) Se verifican las temperaturas
-        modifiedMat = CrearMat(datos_MLX);
-        //modifiedMat.convertTo(modifiedMat, CV_8UC1);
-
+        modifiedMat = CrearMat2(datos_MLX);
 
         //Crea la imagen que será devuelta para mostrar
         Bitmap coloredImage = Bitmap.createBitmap(modifiedMat.rows(), modifiedMat.cols(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(modifiedMat, coloredImage);
-
-        imwrite("ibc.jpg", modifiedMat);
 
         //Devuelve la imagen modificada
         return coloredImage;
@@ -281,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Mat CrearMat(float[] tempArray)
     {
-        Mat paintMat = new Mat(24, 24, CV_64FC1);
+        Mat paintMat = new Mat(24, 24, CV_8UC3);
 
         for(int n = 0; n < 576; n++)
         {
@@ -410,4 +409,214 @@ public class MainActivity extends AppCompatActivity {
         return paintMat;
     }
 
+    private Mat CrearMat2(float[] tempArray)
+    {
+        Mat paintMat = new Mat(24,24,CV_8UC3);
+        byte buff[]= new byte[tempArray.length * 3];
+        int p = 0;
+
+        for(int n = 0; n < tempArray.length; n ++)
+        {
+           if(tempArray[n] <= 28.5)
+           {
+                buff[p] = 255 / 2;
+                buff[p+1] = 255 / 2;
+                buff[p+2] = 0;
+                p = p+3;
+           }
+           else if (tempArray[n] <= 29 && tempArray[n] > 28.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 245 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 29.5 && tempArray[n] > 29)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 235 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 30 && tempArray[n] > 29.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 225 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 30.5 && tempArray[n] > 30)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 215 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 31 && tempArray[n] > 30.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 205 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 31.5 && tempArray[n] > 31)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 195 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 32 && tempArray[n] > 31.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 185 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 32.5 && tempArray[n] > 32)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 175 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 33 && tempArray[n] > 32.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 165 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 33.5 && tempArray[n] > 33)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 155 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 34 && tempArray[n] > 33.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 145 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 34.5 && tempArray[n] > 34)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 135 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 35 && tempArray[n] > 34.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 125 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 35.5 && tempArray[n] > 35)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 115 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 36 && tempArray[n] > 35.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 105 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 36.5 && tempArray[n] > 36)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 95 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 37 && tempArray[n] > 36.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 85 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 37.5 && tempArray[n] > 37)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 75 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 38 && tempArray[n] > 37.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 65 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 38.5 && tempArray[n] > 38)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 55 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 39 && tempArray[n] > 38.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 45 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 39.5 && tempArray[n] > 39)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 35 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 40 && tempArray[n] > 39.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 25 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 40.5 && tempArray[n] > 40)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 15 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 41 && tempArray[n] > 40.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 5 / 2;
+               buff[p+2] = 0;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 41.5 && tempArray[n] > 41)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 0;
+               buff[p+2] = 15 / 2;
+               p = p+3;
+           }
+           else if (tempArray[n] <= 42 && tempArray[n] > 41.5)
+           {
+               buff[p] = 255 / 2;
+               buff[p+1] = 0;
+               buff[p+2] = 30 / 2;
+               p = p+3;
+           }
+        }
+
+        paintMat.put(0,0,buff);
+
+        return paintMat;
+    }
 }
