@@ -38,6 +38,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.opencv.android.OpenCVLoader;
@@ -61,6 +62,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -125,7 +128,11 @@ public class MainActivity extends AppCompatActivity {
     private BLE_Service myBleService = new BLE_Service();
     private boolean BTConnected_Bef = false;
     private String ValorRecibido = null;
-    private int arrayCounter = 0;
+    //private int arrayCounter = 0;
+    private int contador_pixel = 0;
+    private String[] vector_pixel = new String[768];
+    private TextView conexion_txt;
+    private double[] arregloDobles = new double[768];
 
 
     @SuppressLint("ResourceType")
@@ -169,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
         //Comprueba que las imagenes estén OK
         imageCheck(BM_img, BM_img_1);
 
+        TextView conexion_txt = findViewById(R.id.conexion_txt);
+
         //Botones para activar los métodos
         Button concat_button = findViewById(R.id.cctn_btn);
         concat_button.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +199,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button conection_button = findViewById(R.id.conection_btn);
+        conection_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                myBleService.Conectar(DireccionAntes, NombreAntes);
+            }
+        });
+
         Button paint_button = findViewById(R.id.paint_btn);
         paint_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -199,6 +215,10 @@ public class MainActivity extends AppCompatActivity {
                 {
                     //Muestra y guarda la imagen
                     showImage(result);
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"No hay datos para pintar",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -355,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Toast.makeText(MainActivity.this, " Nombre seleccion: " + direccion_BtSelect, Toast.LENGTH_SHORT).show();
                         myBleService.Conectar(DireccionAntes, NombreAntes);
+                        //conexion_txt.setText("Estado: Conectado");
                     }
                 }
         };
@@ -470,23 +491,53 @@ public class MainActivity extends AppCompatActivity {
                     myBleService.BuscarBedCareService();
                     //}
                     break;
+                    /*
                 case BLE_Service.ACTION_DATA_AVAILABLE:
                     ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
                     Log.i(TAG, "hay datos");
                     if (ValorRecibido != null) {
-                        Log.i(TAG, "valor :" + ValorRecibido);
-
-                        /*
-                        double miDoble = ByteBuffer.wrap(ValorRecibido).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-                        datos_MLX[arrayCounter] = miDoble;
-                        arrayCounter++;
-                        if(arrayCounter < 768)
-                        {
-                            imagenMLX = colorPaint(datos_MLX);
-                            arrayCounter = 0;
-                            Toast.makeText(MainActivity.this, "Se ha recibido un arreglo completo", Toast.LENGTH_SHORT).show();
+                        //byte[] ValorEnBytes = ValorRecibido.getBytes();
+                        Log.i(TAG, "valor en string:" + ValorRecibido);
+                        //Log.i(TAG, "valor en bytes puros: " + ValorEnBytes);
+                        //Log.i(TAG, "valor en bytes string: " + ValorEnBytes.toString());
+                        //Log.i(TAG, "valor en parse bytes: " + Byte.parseByte(ValorRecibido));
+                        //double miDoble = ByteBuffer.wrap(ValorRecibido).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+                        //datos_MLX[arrayCounter] = miDoble;
+                        //arrayCounter++;
+                        //if(arrayCounter < 768)
+                        //{
+                        //   imagenMLX = colorPaint(datos_MLX);
+                        //   arrayCounter = 0;
+                        //   Toast.makeText(MainActivity.this, "Se ha recibido un arreglo completo", Toast.LENGTH_SHORT).show();
+                        //}
+                    }
+                    break;
+                    */
+                case BLE_Service.ACTION_DATA_AVAILABLE:
+                    ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
+                    //Trata de recibir como bytes
+                    byte[] bytesMLX = intent.getByteArrayExtra(BLE_Service.EXTRA_DATA);
+                    // Log.i(TAG, "hay datos");
+                    if (ValorRecibido != null) {
+                        contador_pixel++;
+                        if (contador_pixel <= 767) {
+                            vector_pixel[contador_pixel] = ValorRecibido;
+                            //---- Aqui van los cambios de string a byte ----
+                            //Byte a double
+                            double d = ByteBuffer.wrap(bytesMLX).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+                            if(d >= 20 && d <= 43)
+                            {
+                                Log.i(TAG,"Pixel transformado: Bytes: " + bytesMLX + " - Double: " + d);
+                                arregloDobles[contador_pixel] = d;
+                            }
+                            //vector_pixel[contador_pixel] = ;
+                        } else {
+                            contador_pixel = 0;
+                            imagenMLX = colorPaint(arregloDobles);
+                            Toast.makeText(getApplicationContext(),"Imagen lista",Toast.LENGTH_SHORT).show();
+                            //String test = vector_pixel[88];
+                            //Log.i(TAG, "FRAME COMPLETADO: " + Integer.toString(vector_pixel.length) + " pixeles recibidos. Valor pixel 88: " + test);
                         }
-                        */
                     }
                     break;
             }
