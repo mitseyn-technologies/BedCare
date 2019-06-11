@@ -23,6 +23,7 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
+import android.os.Handler;
 
 public class BLE_Service extends Service {
 
@@ -52,12 +53,15 @@ public class BLE_Service extends Service {
     private static final UUID UUID_ATRIBUTE = UUID.fromString("00001801-0000-1000-8000-00805f9b34fb");
     private static final UUID UUID_SERVICE_CHANGED = UUID.fromString("00002a05-0000-1000-8000-00805f9b34fb");
 
+
+    String intentAction;
+
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
         public int myStatusConnection;
 
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newBleState) {
-            String intentAction;
+
             switch (newBleState) {
                 case BluetoothProfile.STATE_CONNECTED:
                     intentAction = ACTION_GATT_CONNECTED;
@@ -74,7 +78,11 @@ public class BLE_Service extends Service {
                         LoopRescan.schedule(RescanConnect, 0, 1000);
                     }
 
+
+
                     broadcastUpdate(intentAction);
+
+
                     myBluetoothGatt.discoverServices();
                     break;
                 case BluetoothProfile.STATE_DISCONNECTED:

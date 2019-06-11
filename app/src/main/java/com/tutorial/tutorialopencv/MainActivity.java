@@ -116,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
     private String DirecciónAhora;
     private int RSSI;
     private String FiltrarBT = null;
-    private String NombreAntes = "InitName";
-    private String DireccionAntes = "00:00:00:00:00:00";
+    private String NombreAntes = "BedCare";
+    private String DireccionAntes = "FA:03:AE:59:51:AD";
     private final Handler Handler_Ble = new Handler();
     private Datos_BLE DatosBLE;
     private ListView BLE_List;
@@ -130,9 +130,10 @@ public class MainActivity extends AppCompatActivity {
     private String ValorRecibido = null;
     //private int arrayCounter = 0;
     private int contador_pixel = 0;
-    private String[] vector_pixel = new String[768];
+    private float[] vector_pixel = new float[768];
     private TextView conexion_txt;
     private double[] arregloDobles = new double[768];
+    private float pixelFlotante;
 
 
     @SuppressLint("ResourceType")
@@ -202,7 +203,8 @@ public class MainActivity extends AppCompatActivity {
         Button conection_button = findViewById(R.id.conection_btn);
         conection_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                myBleService.Conectar(DireccionAntes, NombreAntes);
+                //myBleService.Conectar(DireccionAntes, NombreAntes);
+                NuevaBusqueda_BLE(true);
             }
         });
 
@@ -228,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (!BTConnectado) {
-            Scan_loop(true);
+            //Scan_loop(true);
         } else {
             Scan_loop(false);
         }
@@ -240,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStop();
         StopTimers();
         if (BTConnectado == false) {
-            Scan_loop(true);
+            //Scan_loop(true);
         }
     }
 
@@ -515,34 +517,89 @@ public class MainActivity extends AppCompatActivity {
                     */
                 case BLE_Service.ACTION_DATA_AVAILABLE:
                     ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
-                    //Trata de recibir como bytes
-                    byte[] bytesMLX = intent.getByteArrayExtra(BLE_Service.EXTRA_DATA);
-                    // Log.i(TAG, "hay datos");
+                    Log.i(TAG, "hay datos");
                     if (ValorRecibido != null) {
                         contador_pixel++;
                         if (contador_pixel <= 767) {
-                            vector_pixel[contador_pixel] = ValorRecibido;
-                            //---- Aqui van los cambios de string a byte ----
-                            //Byte a double
-                            double d = ByteBuffer.wrap(bytesMLX).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-                            if(d >= 20 && d <= 43)
-                            {
-                                Log.i(TAG,"Pixel transformado: Bytes: " + bytesMLX + " - Double: " + d);
-                                arregloDobles[contador_pixel] = d;
-                            }
-                            //vector_pixel[contador_pixel] = ;
+                            pixelFlotante = todosflotan(ValorRecibido);
+                            vector_pixel[contador_pixel] = pixelFlotante;
+
                         } else {
                             contador_pixel = 0;
-                            imagenMLX = colorPaint(arregloDobles);
-                            Toast.makeText(getApplicationContext(),"Imagen lista",Toast.LENGTH_SHORT).show();
-                            //String test = vector_pixel[88];
-                            //Log.i(TAG, "FRAME COMPLETADO: " + Integer.toString(vector_pixel.length) + " pixeles recibidos. Valor pixel 88: " + test);
+                            float test = vector_pixel[88];
+                            Log.i(TAG, "FRAME COMPLETADO: " + Integer.toString(vector_pixel.length) + " pixeles recibidos. Valor pixel 88: " + test);
+
                         }
                     }
                     break;
             }
         }
     };
+
+    private float todosflotan(String Input) {
+
+
+        String auxVar = Input.replaceAll("\\s+", " ");
+        String[] basura = auxVar.split("(?!^) ");
+
+        Log.i(TAG, "Input: " + auxVar + " Sin espacios: " + basura + " Tamaño sin espacios: " + Integer.toString(basura.length));
+
+
+        String tempByte = basura[1] + basura[2] +basura[3] +basura[4];
+
+        Log.i(TAG, "byte antes: " + tempByte );
+
+
+        char[] basuraAux =tempByte.toCharArray();
+        Log.i(TAG, "byte antes 2: " +basuraAux[0] + basuraAux[1] + basuraAux[2] + basuraAux[3] + basuraAux[4] + basuraAux[5] + basuraAux[6] + basuraAux[7] );
+
+        String tempByte2 = "";
+        if((basuraAux[0]>='A' && basuraAux[0]<='F') ||
+                (Character.getNumericValue(basuraAux[0]) <=9 && Character.getNumericValue(basuraAux[0]) >= 0 ))
+        {
+            for (int i = 1;i < basuraAux.length;i++)
+            {
+                String temp = String.valueOf(basuraAux[i]);
+                tempByte2 = tempByte2 + temp;
+            }
+            //tempByte = String.valueOf(basuraAux[1] + basuraAux[2] + basuraAux[3] + basuraAux[4] + basuraAux[5] + basuraAux[6] + basuraAux[7]);
+
+        }else{
+
+            for (int i = 0;i < basuraAux.length;i++)
+            {
+                String temp = String.valueOf(basuraAux[i]);
+                tempByte2 = tempByte2 + temp;
+            }
+            //tempByte = String.valueOf(basuraAux[0] + basuraAux[1] + basuraAux[2] + basuraAux[3] + basuraAux[4] + basuraAux[5] + basuraAux[6] + basuraAux[7]);
+
+        }
+
+        Log.i(TAG, "byte despues: " + tempByte2 );
+
+
+
+        // String [] auxVar = {}; //Input.replaceAll("\\s+", "");
+
+        /*for (int i = 4; i < auxVar.length()-1; i++) {
+            auxArray[i-4] = basura[i];
+        }*/
+
+        /*StringBuilder builder = new StringBuilder();
+        for (String s : auxArray) {
+            builder.append(s);
+        }
+        String test = builder.toString();
+        Log.i(TAG, "SIN BASURA: " + test);*/
+
+        /*Long i = Long.parseLong(tempByte, 16);
+        Float f = Float.intBitsToFloat(i.intValue());*/
+
+        // Long paraFlotar = Long.parseLong(auxVar, 16);
+        float enFlotante = 0; //Float.intBitsToFloat(paraFlotar.intValue());
+        Log.i(TAG, "FLOTANTE: " + enFlotante);
+        return enFlotante;
+    }
 
     public void imageCheck(Bitmap img1, Bitmap img2){
         //Comprobación de las imagenes
@@ -558,7 +615,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showImage(Bitmap result){
+    public void showImage(Bitmap result)
+    {
         //Obtiene el imageView
         ImageView image = findViewById(R.id.imgView);
         //Muestra la imagen en el imageView
@@ -568,10 +626,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Método para superponer imagenes
-    public Bitmap overlapImages(Bitmap firstImage, Bitmap secondImage){
+    public Bitmap overlapImages(Bitmap firstImage, Bitmap secondImage)
+    {
 
         Bitmap oi;
-
         oi = Bitmap.createBitmap(firstImage.getWidth(), firstImage.getHeight(), firstImage.getConfig());
         Canvas canvas = new Canvas(oi);
         //Primera imagen. No modificar valores.
@@ -614,7 +672,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Metodo para almacenar en memoria
-    private void saveToInternalStorage(Bitmap bitmap){
+    private void saveToInternalStorage(Bitmap bitmap)
+    {
         String dir = Environment.getExternalStorageDirectory()+ File.separator+"DCIM/bedCare";
 
         //create folder
