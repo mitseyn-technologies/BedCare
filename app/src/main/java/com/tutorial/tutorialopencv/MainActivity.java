@@ -130,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
     private String ValorRecibido = null;
     //private int arrayCounter = 0;
     private int contador_pixel = 0;
-    private float[] vector_pixel = new float[768];
+    private double[] vector_pixel = new double[768];
     private TextView conexion_txt;
     private double[] arregloDobles = new double[768];
-    private float pixelFlotante;
+    private double pixelFlotante;
 
 
     @SuppressLint("ResourceType")
@@ -517,16 +517,18 @@ public class MainActivity extends AppCompatActivity {
                     */
                 case BLE_Service.ACTION_DATA_AVAILABLE:
                     ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
+
                     Log.i(TAG, "hay datos");
                     if (ValorRecibido != null) {
                         contador_pixel++;
                         if (contador_pixel <= 767) {
                             pixelFlotante = todosflotan(ValorRecibido);
                             vector_pixel[contador_pixel] = pixelFlotante;
-
+                            datos_MLX = vector_pixel;
                         } else {
+                            imagenMLX = colorPaint(datos_MLX);
                             contador_pixel = 0;
-                            float test = vector_pixel[88];
+                            double test = vector_pixel[88];
                             Log.i(TAG, "FRAME COMPLETADO: " + Integer.toString(vector_pixel.length) + " pixeles recibidos. Valor pixel 88: " + test);
 
                         }
@@ -536,69 +538,15 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private float todosflotan(String Input) {
+    private double todosflotan(String Input) {
 
 
-        String auxVar = Input.replaceAll("\\s+", " ");
-        String[] basura = auxVar.split("(?!^) ");
+        Long i = Long.parseLong(Input, 16);
+        Float f = Float.intBitsToFloat(i.intValue());
+        double d = f;
 
-        Log.i(TAG, "Input: " + auxVar + " Sin espacios: " + basura + " Tamaño sin espacios: " + Integer.toString(basura.length));
-
-
-        String tempByte = basura[1] + basura[2] +basura[3] +basura[4];
-
-        Log.i(TAG, "byte antes: " + tempByte );
-
-
-        char[] basuraAux =tempByte.toCharArray();
-        Log.i(TAG, "byte antes 2: " +basuraAux[0] + basuraAux[1] + basuraAux[2] + basuraAux[3] + basuraAux[4] + basuraAux[5] + basuraAux[6] + basuraAux[7] );
-
-        String tempByte2 = "";
-        if((basuraAux[0]>='A' && basuraAux[0]<='F') ||
-                (Character.getNumericValue(basuraAux[0]) <=9 && Character.getNumericValue(basuraAux[0]) >= 0 ))
-        {
-            for (int i = 1;i < basuraAux.length;i++)
-            {
-                String temp = String.valueOf(basuraAux[i]);
-                tempByte2 = tempByte2 + temp;
-            }
-            //tempByte = String.valueOf(basuraAux[1] + basuraAux[2] + basuraAux[3] + basuraAux[4] + basuraAux[5] + basuraAux[6] + basuraAux[7]);
-
-        }else{
-
-            for (int i = 0;i < basuraAux.length;i++)
-            {
-                String temp = String.valueOf(basuraAux[i]);
-                tempByte2 = tempByte2 + temp;
-            }
-            //tempByte = String.valueOf(basuraAux[0] + basuraAux[1] + basuraAux[2] + basuraAux[3] + basuraAux[4] + basuraAux[5] + basuraAux[6] + basuraAux[7]);
-
-        }
-
-        Log.i(TAG, "byte despues: " + tempByte2 );
-
-
-
-        // String [] auxVar = {}; //Input.replaceAll("\\s+", "");
-
-        /*for (int i = 4; i < auxVar.length()-1; i++) {
-            auxArray[i-4] = basura[i];
-        }*/
-
-        /*StringBuilder builder = new StringBuilder();
-        for (String s : auxArray) {
-            builder.append(s);
-        }
-        String test = builder.toString();
-        Log.i(TAG, "SIN BASURA: " + test);*/
-
-        /*Long i = Long.parseLong(tempByte, 16);
-        Float f = Float.intBitsToFloat(i.intValue());*/
-
-        // Long paraFlotar = Long.parseLong(auxVar, 16);
-        float enFlotante = 0; //Float.intBitsToFloat(paraFlotar.intValue());
-        Log.i(TAG, "FLOTANTE: " + enFlotante);
-        return enFlotante;
+        Log.i(TAG, "FLOTANTE: " + Math.abs(d));
+        return Math.abs(d);
     }
 
     public void imageCheck(Bitmap img1, Bitmap img2){
