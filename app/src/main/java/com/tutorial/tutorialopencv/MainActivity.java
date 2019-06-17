@@ -56,10 +56,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
@@ -96,6 +99,7 @@ import static org.opencv.imgproc.Imgproc.threshold;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String FILE_NAME = "bedcare_data.txt";
     private Bitmap BM_img, BM_img_1, imagenMLX;
     private double[] datos_MLX = new double[768];
 
@@ -167,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
         startService(gattServiceIntent);
         bindService(gattServiceIntent, my_Service_Basic, BIND_AUTO_CREATE);
 
+        datos_MLX = new double[768];
+
         //Declaración de imagenes
         BM_img = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.hand);
@@ -175,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.hand_two);
 
         //Comprueba que las imagenes estén OK
-        imageCheck(BM_img, BM_img_1);
+        //imageCheck(BM_img, BM_img_1);
 
         TextView conexion_txt = findViewById(R.id.conexion_txt);
 
@@ -493,13 +499,13 @@ public class MainActivity extends AppCompatActivity {
                     myBleService.BuscarBedCareService();
                     //}
                     break;
-                    /*
-                case BLE_Service.ACTION_DATA_AVAILABLE:
-                    ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
-                    Log.i(TAG, "hay datos");
-                    if (ValorRecibido != null) {
+
+                //case BLE_Service.ACTION_DATA_AVAILABLE:
+                    //ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
+                    //Log.i(TAG, "hay datos");
+                    //if (ValorRecibido != null) {
                         //byte[] ValorEnBytes = ValorRecibido.getBytes();
-                        Log.i(TAG, "valor en string:" + ValorRecibido);
+                        //Log.i(TAG, "valor en string:" + ValorRecibido);
                         //Log.i(TAG, "valor en bytes puros: " + ValorEnBytes);
                         //Log.i(TAG, "valor en bytes string: " + ValorEnBytes.toString());
                         //Log.i(TAG, "valor en parse bytes: " + Byte.parseByte(ValorRecibido));
@@ -512,25 +518,30 @@ public class MainActivity extends AppCompatActivity {
                         //   arrayCounter = 0;
                         //   Toast.makeText(MainActivity.this, "Se ha recibido un arreglo completo", Toast.LENGTH_SHORT).show();
                         //}
-                    }
-                    break;
-                    */
+                    //}
+                    //break;
+
                 case BLE_Service.ACTION_DATA_AVAILABLE:
                     ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
 
-                    Log.i(TAG, "hay datos");
+                    Log.i(TAG, "Hay Datos");
                     if (ValorRecibido != null) {
                         contador_pixel++;
                         if (contador_pixel <= 767) {
                             pixelFlotante = todosflotan(ValorRecibido);
                             vector_pixel[contador_pixel] = pixelFlotante;
                             datos_MLX = vector_pixel;
-                        } else {
-                            imagenMLX = colorPaint(datos_MLX);
+                        }
+                        else if (contador_pixel <= 100)
+                        {
+                            writeToFile(datos_MLX);
+                        }
+                        else
+                        {
+                            //saveToInternalFile(vector_pixel);
+                            //writeToFile(datos_MLX);
+                            showImage(colorPaint(datos_MLX));
                             contador_pixel = 0;
-                            double test = vector_pixel[88];
-                            Log.i(TAG, "FRAME COMPLETADO: " + Integer.toString(vector_pixel.length) + " pixeles recibidos. Valor pixel 88: " + test);
-
                         }
                     }
                     break;
@@ -539,28 +550,59 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private double todosflotan(String Input) {
-
-
-        Long i = Long.parseLong(Input, 16);
-        Float f = Float.intBitsToFloat(i.intValue());
-        double d = f;
-
-        Log.i(TAG, "FLOTANTE: " + Math.abs(d));
-        return Math.abs(d);
-    }
-
-    public void imageCheck(Bitmap img1, Bitmap img2){
-        //Comprobación de las imagenes
-        if (img1 == null){
-            Toast.makeText(getApplicationContext(),"Error, no se pudo leer la imagen: " + BM_img,Toast.LENGTH_LONG).show();
+        String Input_prime = Input;
+        Log.i(TAG, "Input: " + Input_prime);
+        String auxVar = Input_prime.replaceAll("\\s+", "");
+        String[] auxArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
+        String[] newAuxArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
+        String[] basuraArray = auxVar.split("");
+        for (int i = 0; i < auxArray.length - 1; i++) {
+            auxArray[(auxArray.length - 1) - i] = basuraArray[(basuraArray.length - 1) - i];
         }
-        else if (img2 == null){
-            Toast.makeText(getApplicationContext(),"Error, no se pudo leer la imagen: " + BM_img_1,Toast.LENGTH_LONG).show();
+
+
+        //Los datos llegan codificados en formato Big Endian desde la cámara. Para leerlos correctamente, hay que traspasarlos a Little Endian,
+        //que es un formato de codificación similar. La única diferencia entre ambos, es que uno es la versión invertida del otro. Por tanto,
+        //para obtener el número correcto, hay que invertir el arreglo antes de transformarlo.
+        //
+        //EJ:
+        //String[] auxArray = {"4","1","B","C","D","1","E","9"}; Datos de la cámara (Big Endian)
+        //String[] newAuxArray = {"E","9","D","1","B","C","4","1"}; Datos invertidos (Little Endian)
+
+
+        //Arreglo hardcodeado porque se me hizo menos complejo y más corto que hacer el for.
+        //Se puede cambiar por un for más adelante.
+
+        newAuxArray[0] = auxArray[6];
+        newAuxArray[1] = auxArray[7];
+        newAuxArray[2] = auxArray[4];
+        newAuxArray[3] = auxArray[5];
+        newAuxArray[4] = auxArray[2];
+        newAuxArray[5] = auxArray[3];
+        newAuxArray[6] = auxArray[0];
+        newAuxArray[7] = auxArray[1];
+
+        StringBuilder builder2 = new StringBuilder();
+        for (String s : newAuxArray) {
+            builder2.append(s);
         }
-        else
-        {
-            Toast.makeText(getApplicationContext(),"Imagenes OK",Toast.LENGTH_SHORT).show();
-        }
+
+        String DatosInvertidos = builder2.toString();
+
+        Long floatInvertido = Long.parseLong(DatosInvertidos, 16);
+        Log.i(TAG, "Input invertida: " + DatosInvertidos);
+
+        //float enFlotante = Float.intBitsToFloat(paraFlotar.intValue());
+        //Log.i(TAG, "FLOTANTE: " + enFlotante);
+
+        float enFlotanteInvertido = Float.intBitsToFloat(floatInvertido.intValue());
+        Log.i(TAG, "FLOTANTE INVERTIDO: " + enFlotanteInvertido);
+
+        //double d = ByteBuffer.wrap(b).order(ByteOrder.LITTLE_ENDIAN ).getDouble();
+        //Log.i(TAG, "DOUBLE: " + d);
+
+        double enDouble = enFlotanteInvertido;
+        return enDouble;
     }
 
     public void showImage(Bitmap result)
@@ -570,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
         //Muestra la imagen en el imageView
         image.setImageBitmap(result);
         //Guarda la imagen en el celular
-        saveToInternalStorage(result);
+        //saveToInternalStorage(result);
     }
 
     //Método para superponer imagenes
@@ -654,6 +696,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void writeToFile(double[] array)
+    {
+        String[] numbers = new String[768];
+
+        for (int i = 0; i < array.length; i++) {
+            numbers[i] = String.valueOf(array[i]);
+        }
+
+        StringBuilder builder = new StringBuilder();
+        for(String s : numbers) {
+            builder.append(s + "\n");
+        }
+        String str = builder.toString();
+
+        String path = Environment.getExternalStorageDirectory() + File.separator  + "/DCIM/bedCare";
+        // Create the folder.
+        File folder = new File(path);
+        folder.mkdirs();
+
+        // Create the file.
+        File file = new File(folder, "bedcareData.txt");
+
+        // Save your stream, don't forget to flush() it before closing it.
+
+        try
+        {
+            file.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(file);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+            myOutWriter.append(str);
+
+            myOutWriter.close();
+
+            fOut.flush();
+            fOut.close();
+        }
+        catch (IOException e)
+        {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
+    }
+
     //Método de pintado de arreglos
     private Bitmap colorPaint(double[] array)
     {
@@ -693,200 +777,207 @@ public class MainActivity extends AppCompatActivity {
 
         for(int n = 0; n < tempArray.length; n ++)
         {
-           if(tempArray[n] <= 28.5)
+           if(tempArray[n] <= 20)
            {
                 buff[p] = 255 - 128;
                 buff[p+1] = 255 - 128;
                 buff[p+2] = 0;
                 p = p+3;
            }
-           else if (tempArray[n] <= 29 && tempArray[n] > 28.5)
+           else if (tempArray[n] <= 21 && tempArray[n] > 20)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 245 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 29.5 && tempArray[n] > 29)
+           else if (tempArray[n] <= 22 && tempArray[n] > 21)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 235 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 30 && tempArray[n] > 29.5)
+           else if (tempArray[n] <= 23 && tempArray[n] > 22)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 225 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 30.5 && tempArray[n] > 30)
+           else if (tempArray[n] <= 24 && tempArray[n] > 23)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 215 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 31 && tempArray[n] > 30.5)
+           else if (tempArray[n] <= 25 && tempArray[n] > 24)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 205 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 31.5 && tempArray[n] > 31)
+           else if (tempArray[n] <= 26 && tempArray[n] > 25)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 195 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 32 && tempArray[n] > 31.5)
+           else if (tempArray[n] <= 27 && tempArray[n] > 26)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 185 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 32.5 && tempArray[n] > 32)
+           else if (tempArray[n] <= 28 && tempArray[n] > 27)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 175 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 33 && tempArray[n] > 32.5)
+           else if (tempArray[n] <= 29 && tempArray[n] > 28)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 165 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 33.5 && tempArray[n] > 33)
+           else if (tempArray[n] <= 30 && tempArray[n] > 29)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 155 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 34 && tempArray[n] > 33.5)
+           else if (tempArray[n] <= 31 && tempArray[n] > 30)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 145 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 34.5 && tempArray[n] > 34)
+           else if (tempArray[n] <= 32 && tempArray[n] > 31)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 135 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 35 && tempArray[n] > 34.5)
+           else if (tempArray[n] <= 33 && tempArray[n] > 32)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 125 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 35.5 && tempArray[n] > 35)
+           else if (tempArray[n] <= 34 && tempArray[n] > 33)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 115 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 36 && tempArray[n] > 35.5)
+           else if (tempArray[n] <= 35 && tempArray[n] > 34)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 105 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 36.5 && tempArray[n] > 36)
+           else if (tempArray[n] <= 36 && tempArray[n] > 35)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 95 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 37 && tempArray[n] > 36.5)
+           else if (tempArray[n] <= 37 && tempArray[n] > 36)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 85 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 37.5 && tempArray[n] > 37)
+           else if (tempArray[n] <= 38 && tempArray[n] > 37)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 75 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 38 && tempArray[n] > 37.5)
+           else if (tempArray[n] <= 39 && tempArray[n] > 38)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 65 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 38.5 && tempArray[n] > 38)
+           else if (tempArray[n] <= 40 && tempArray[n] > 39)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 55 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 39 && tempArray[n] > 38.5)
+           else if (tempArray[n] <= 41 && tempArray[n] > 40)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 45 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 39.5 && tempArray[n] > 39)
+           else if (tempArray[n] <= 42 && tempArray[n] > 41)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 35 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 40 && tempArray[n] > 39.5)
+           else if (tempArray[n] <= 43 && tempArray[n] > 42)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 25 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 40.5 && tempArray[n] > 40)
+           else if (tempArray[n] <= 44 && tempArray[n] > 43)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 15 - 128;
                buff[p+2] = 0;
                p = p+3;
            }
-           else if (tempArray[n] <= 41 && tempArray[n] > 40.5)
+           else if (tempArray[n] <= 45 && tempArray[n] > 44)
            {
                buff[p] = 255 - 128;
                buff[p+1] = 5 - 128;
                buff[p+2] =  0;
                p = p+3;
            }
-           else if (tempArray[n] <= 41.5 && tempArray[n] > 41)
+           else if (tempArray[n] <= 46 && tempArray[n] > 45)
            {
                buff[p] = 255 - 128;
                buff[p+1] =  0;
                buff[p+2] = -67;
                p = p+3;
            }
-           else if (tempArray[n] <= 42 && tempArray[n] > 41.5)
+           else if (tempArray[n] <= 47 && tempArray[n] > 46)
            {
                buff[p] = 255 - 128;
                buff[p+1] = -127;
                buff[p+2] = -7;
+               p = p+3;
+           }
+           else if (tempArray[n] > 47)
+           {
+               buff[p] = 255 - 128;
+               buff[p+1] = -127;
+               buff[p+2] = -127;
                p = p+3;
            }
         }

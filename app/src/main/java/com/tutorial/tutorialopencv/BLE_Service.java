@@ -146,10 +146,14 @@ public class BLE_Service extends Service {
             final byte[] TravelWord = characteristic.getValue();
             if (TravelWord != null && TravelWord.length > 0) {
                 final StringBuilder stringBuilder = new StringBuilder(TravelWord.length);
+                final StringBuilder stringBuilder2 = new StringBuilder(TravelWord.length);
 
-                for (byte byteChar : TravelWord)
+                for (byte byteChar : TravelWord) {
                     stringBuilder.append(String.format("%02X ", byteChar));
-                Log.i(TAG, "Broadcast: " + new String(TravelWord) + "\n" + stringBuilder.toString());
+                    stringBuilder2.append(byteChar);
+                }
+                Log.i(TAG, "Normal Broadcast: " + new String(TravelWord) + "\n" + stringBuilder.toString());
+                Log.i(TAG, "Pure Broadcast: " + stringBuilder2.toString());
                 intent.putExtra(EXTRA_DATA,  stringBuilder.toString());
             }
             sendBroadcast(intent);
