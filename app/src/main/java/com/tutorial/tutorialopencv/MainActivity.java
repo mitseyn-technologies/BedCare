@@ -134,10 +134,13 @@ public class MainActivity extends AppCompatActivity {
     private String ValorRecibido = null;
     //private int arrayCounter = 0;
     private int contador_pixel = 0;
+    private int contador_datos = 0;
     private double[] vector_pixel = new double[768];
     private TextView conexion_txt;
     private double[] arregloDobles = new double[768];
     private double pixelFlotante;
+    private boolean arrayIsDone = false;
+    private boolean isNewArrayReady = true;
 
 
     @SuppressLint("ResourceType")
@@ -218,11 +221,11 @@ public class MainActivity extends AppCompatActivity {
         paint_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Llama funcion para superponer imagenes
-                Bitmap result = imagenMLX;
-                if(result != null)
+                if(imagenMLX != null)
                 {
                     //Muestra y guarda la imagen
-                    showImage(result);
+                    showImage(imagenMLX);
+                    //Maybe fill the rest of the image with zeros?
                 }
                 else
                 {
@@ -262,6 +265,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(BLE_broadcast);
+        myBleService.StopLoop();
+        myBleService.Desconectar();
         stopService(new Intent(this, BLE_Service.class));
         unbindService(my_Service_Basic);
         myBleService = null;
@@ -524,24 +529,48 @@ public class MainActivity extends AppCompatActivity {
                 case BLE_Service.ACTION_DATA_AVAILABLE:
                     ValorRecibido = intent.getStringExtra(BLE_Service.EXTRA_DATA);
 
-                    Log.i(TAG, "Hay Datos");
                     if (ValorRecibido != null) {
-                        contador_pixel++;
+                        //Si pasó un frame, empieza a contar de nuevo.
+                        if(contador_datos >= 767) {
+                            Log.i(TAG, "Nuevo frame iniciado");
+                            contador_datos = 0;
+                        }
+
+                        //Declara que el nuevo arreglo está listo sólo si el arreglo anterior ya pasó y está llegando un frame nuevo.
+                        if(arrayIsDone == false && contador_datos == 0)
+                            isNewArrayReady = true;
+
+                        //Cuenta todos los datos que han llegado, ignorados o no.
+                        contador_datos++;
+                    }
+
+                    //Solo puede entrar si está recibiendo un frame totalmente nuevo y el frame anterior ya está listo
+                    if (ValorRecibido != null  && isNewArrayReady == true) {
                         if (contador_pixel <= 767) {
                             pixelFlotante = todosflotan(ValorRecibido);
                             vector_pixel[contador_pixel] = pixelFlotante;
-                            datos_MLX = vector_pixel;
-                        }
-                        else if (contador_pixel <= 100)
-                        {
-                            writeToFile(datos_MLX);
+                            //datos_MLX = vector_pixel;
+                            /*if(contador_pixel == 200) {
+                                writeToFile(datos_MLX);
+                            }*/
+                            contador_pixel++;
                         }
                         else
                         {
-                            //saveToInternalFile(vector_pixel);
+                            datos_MLX = vector_pixel;
+                            arrayIsDone = true;
+                            isNewArrayReady = false;
                             //writeToFile(datos_MLX);
                             showImage(colorPaint(datos_MLX));
                             contador_pixel = 0;
+                            (new Handler()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    datos_MLX = null;
+                                    arrayIsDone = false;
+                                    Log.i(TAG, "Listo para recibir otro arreglo");
+                                }
+                            }, 7000);
                         }
                     }
                     break;
@@ -701,12 +730,12 @@ public class MainActivity extends AppCompatActivity {
         String[] numbers = new String[768];
 
         for (int i = 0; i < array.length; i++) {
-            numbers[i] = String.valueOf(array[i]);
+            numbers[i] = "("+ i +") " + (String.valueOf(array[i])) + "\n";
         }
 
         StringBuilder builder = new StringBuilder();
         for(String s : numbers) {
-            builder.append(s + "\n");
+            builder.append(s);
         }
         String str = builder.toString();
 
@@ -726,6 +755,7 @@ public class MainActivity extends AppCompatActivity {
             FileOutputStream fOut = new FileOutputStream(file);
             OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
             myOutWriter.append(str);
+            myOutWriter.append(" - Largo del array recibido: " + array.length);
 
             myOutWriter.close();
 
