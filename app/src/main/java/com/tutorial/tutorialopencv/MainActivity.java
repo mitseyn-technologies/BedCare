@@ -221,16 +221,17 @@ public class MainActivity extends AppCompatActivity {
         paint_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Llama funcion para superponer imagenes
-                if(imagenMLX != null)
-                {
+                //if(imagenMLX != null)
+                //{
                     //Muestra y guarda la imagen
-                    showImage(imagenMLX);
+                    //showImage(imagenMLX);
+                    showImage(colorPaint(arregloPruebas()));
                     //Maybe fill the rest of the image with zeros?
-                }
+                /*}
                 else
                 {
                     Toast.makeText(getApplicationContext(),"No hay datos para pintar",Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
         });
     }
@@ -561,7 +562,8 @@ public class MainActivity extends AppCompatActivity {
                             arrayIsDone = true;
                             isNewArrayReady = false;
                             //writeToFile(datos_MLX);
-                            showImage(colorPaint(datos_MLX));
+                            //showImage(colorPaint(datos_MLX));
+                            showImage(colorPaint(arregloPruebas()));
                             contador_pixel = 0;
                             (new Handler()).postDelayed(new Runnable() {
                                 @Override
@@ -608,8 +610,8 @@ public class MainActivity extends AppCompatActivity {
         newAuxArray[3] = auxArray[5];
         newAuxArray[4] = auxArray[2];
         newAuxArray[5] = auxArray[3];
-        newAuxArray[6] = auxArray[0];
-        newAuxArray[7] = auxArray[1];
+        newAuxArray[6] = auxArray[0]; //<-- Aqui hay un problema. Lo que llegue es reemplazado por un 0 el 100% de las veces.
+        newAuxArray[7] = auxArray[1]; //    No parece alterar el numero final más de 0.001 unidades, pero es importante saberlo.
 
         StringBuilder builder2 = new StringBuilder();
         for (String s : newAuxArray) {
@@ -771,8 +773,6 @@ public class MainActivity extends AppCompatActivity {
     //Método de pintado de arreglos
     private Bitmap colorPaint(double[] array)
     {
-        Mat modifiedMat;
-
         //Test
         //Random r = new Random();
         //float min = 28.0f; //Valor mínimo
@@ -789,11 +789,9 @@ public class MainActivity extends AppCompatActivity {
 
         //4) Se verifican las temperaturas
 
-        modifiedMat = CrearMat2(array);
-
         //Crea la imagen que será devuelta para mostrar
         Bitmap coloredImage = Bitmap.createBitmap(24, 32, Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(modifiedMat, coloredImage);
+        Utils.matToBitmap(CrearMat2(array), coloredImage);
 
         //Devuelve la imagen modificada
         return coloredImage;
@@ -809,210 +807,210 @@ public class MainActivity extends AppCompatActivity {
         {
            if(tempArray[n] <= 20)
            {
-                buff[p] = 255 - 128;
-                buff[p+1] = 255 - 128;
+                buff[p] = 127;
+                buff[p+1] = 127;
                 buff[p+2] = 0;
                 p = p+3;
            }
            else if (tempArray[n] <= 21 && tempArray[n] > 20)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 245 - 128;
+               buff[p] = 127;
+               buff[p+1] = 117;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 22 && tempArray[n] > 21)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 235 - 128;
+               buff[p] = 127;
+               buff[p+1] = 107;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 23 && tempArray[n] > 22)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 225 - 128;
+               buff[p] = 127;
+               buff[p+1] = 97;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 24 && tempArray[n] > 23)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 215 - 128;
+               buff[p] = 127;
+               buff[p+1] = 87;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 25 && tempArray[n] > 24)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 205 - 128;
+               buff[p] = 127;
+               buff[p+1] = 77;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 26 && tempArray[n] > 25)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 195 - 128;
+               buff[p] = 127;
+               buff[p+1] = 67;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 27 && tempArray[n] > 26)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 185 - 128;
+               buff[p] = 127;
+               buff[p+1] = 57;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 28 && tempArray[n] > 27)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 175 - 128;
+               buff[p] = 127;
+               buff[p+1] = 47;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 29 && tempArray[n] > 28)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 165 - 128;
+               buff[p] = 127;
+               buff[p+1] = 37;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 30 && tempArray[n] > 29)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 155 - 128;
+               buff[p] = 127;
+               buff[p+1] = 27;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 31 && tempArray[n] > 30)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 145 - 128;
+               buff[p] = 127;
+               buff[p+1] = 17;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 32 && tempArray[n] > 31)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 135 - 128;
+               buff[p] = 127;
+               buff[p+1] = 7;
                buff[p+2] = 0;
                p = p+3;
            }
            else if (tempArray[n] <= 33 && tempArray[n] > 32)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 125 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 7;
                p = p+3;
            }
            else if (tempArray[n] <= 34 && tempArray[n] > 33)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 115 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 17;
                p = p+3;
            }
            else if (tempArray[n] <= 35 && tempArray[n] > 34)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 105 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 27;
                p = p+3;
            }
            else if (tempArray[n] <= 36 && tempArray[n] > 35)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 95 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 37;
                p = p+3;
            }
            else if (tempArray[n] <= 37 && tempArray[n] > 36)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 85 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 47;
                p = p+3;
            }
            else if (tempArray[n] <= 38 && tempArray[n] > 37)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 75 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 57;
                p = p+3;
            }
            else if (tempArray[n] <= 39 && tempArray[n] > 38)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 65 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 67;
                p = p+3;
            }
            else if (tempArray[n] <= 40 && tempArray[n] > 39)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 55 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 77;
                p = p+3;
            }
            else if (tempArray[n] <= 41 && tempArray[n] > 40)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 45 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 87;
                p = p+3;
            }
            else if (tempArray[n] <= 42 && tempArray[n] > 41)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 35 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 97;
                p = p+3;
            }
            else if (tempArray[n] <= 43 && tempArray[n] > 42)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 25 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 107;
                p = p+3;
            }
            else if (tempArray[n] <= 44 && tempArray[n] > 43)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 15 - 128;
-               buff[p+2] = 0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] = 117;
                p = p+3;
            }
            else if (tempArray[n] <= 45 && tempArray[n] > 44)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = 5 - 128;
-               buff[p+2] =  0;
+               buff[p] = 127;
+               buff[p+1] = 0;
+               buff[p+2] =  127;
                p = p+3;
            }
            else if (tempArray[n] <= 46 && tempArray[n] > 45)
            {
-               buff[p] = 255 - 128;
+               buff[p] = 117;
                buff[p+1] =  0;
-               buff[p+2] = -67;
+               buff[p+2] = 127;
                p = p+3;
            }
            else if (tempArray[n] <= 47 && tempArray[n] > 46)
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = -127;
-               buff[p+2] = -7;
+               buff[p] = 107;
+               buff[p+1] = 0;
+               buff[p+2] = 127;
                p = p+3;
            }
-           else if (tempArray[n] > 47)
+           else /*if (tempArray[n] > 47)*/
            {
-               buff[p] = 255 - 128;
-               buff[p+1] = -127;
-               buff[p+2] = -127;
+               buff[p] = 97;
+               buff[p+1] = 0;
+               buff[p+2] = 127;
                p = p+3;
            }
         }
 
-        paintMat.put(0,0,buff);
+        paintMat.put(0,0, buff);
         return paintMat;
     }
 
