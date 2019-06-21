@@ -800,214 +800,369 @@ public class MainActivity extends AppCompatActivity {
     private Mat CrearMat2(double[] tempArray)
     {
         Mat paintMat = new Mat(32,24,CV_8UC3);
-        byte buff[]= new byte[tempArray.length * 3];
+        double buff[]= new double[tempArray.length * 3];
         int p = 0;
 
         for(int n = 0; n < tempArray.length; n ++)
         {
-           if(tempArray[n] <= 20)
-           {
-                buff[p] = 127;
-                buff[p+1] = 127;
-                buff[p+2] = 0;
+            if (tempArray[n] <= 18.20 && tempArray[n] > 18.00){
+                buff[p]= 0 ;buff[p+1]=  0 ;buff[p+2]=  0  ;
                 p = p+3;
-           }
-           else if (tempArray[n] <= 21 && tempArray[n] > 20)
-           {
-               buff[p] = 127;
-               buff[p+1] = 117;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 22 && tempArray[n] > 21)
-           {
-               buff[p] = 127;
-               buff[p+1] = 107;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 23 && tempArray[n] > 22)
-           {
-               buff[p] = 127;
-               buff[p+1] = 97;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 24 && tempArray[n] > 23)
-           {
-               buff[p] = 127;
-               buff[p+1] = 87;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 25 && tempArray[n] > 24)
-           {
-               buff[p] = 127;
-               buff[p+1] = 77;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 26 && tempArray[n] > 25)
-           {
-               buff[p] = 127;
-               buff[p+1] = 67;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 27 && tempArray[n] > 26)
-           {
-               buff[p] = 127;
-               buff[p+1] = 57;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 28 && tempArray[n] > 27)
-           {
-               buff[p] = 127;
-               buff[p+1] = 47;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 29 && tempArray[n] > 28)
-           {
-               buff[p] = 127;
-               buff[p+1] = 37;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 30 && tempArray[n] > 29)
-           {
-               buff[p] = 127;
-               buff[p+1] = 27;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 31 && tempArray[n] > 30)
-           {
-               buff[p] = 127;
-               buff[p+1] = 17;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 32 && tempArray[n] > 31)
-           {
-               buff[p] = 127;
-               buff[p+1] = 7;
-               buff[p+2] = 0;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 33 && tempArray[n] > 32)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 7;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 34 && tempArray[n] > 33)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 17;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 35 && tempArray[n] > 34)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 27;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 36 && tempArray[n] > 35)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 37;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 37 && tempArray[n] > 36)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 47;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 38 && tempArray[n] > 37)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 57;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 39 && tempArray[n] > 38)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 67;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 40 && tempArray[n] > 39)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 77;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 41 && tempArray[n] > 40)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 87;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 42 && tempArray[n] > 41)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 97;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 43 && tempArray[n] > 42)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 107;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 44 && tempArray[n] > 43)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] = 117;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 45 && tempArray[n] > 44)
-           {
-               buff[p] = 127;
-               buff[p+1] = 0;
-               buff[p+2] =  127;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 46 && tempArray[n] > 45)
-           {
-               buff[p] = 117;
-               buff[p+1] =  0;
-               buff[p+2] = 127;
-               p = p+3;
-           }
-           else if (tempArray[n] <= 47 && tempArray[n] > 46)
-           {
-               buff[p] = 107;
-               buff[p+1] = 0;
-               buff[p+2] = 127;
-               p = p+3;
-           }
-           else /*if (tempArray[n] > 47)*/
-           {
-               buff[p] = 97;
-               buff[p+1] = 0;
-               buff[p+2] = 127;
-               p = p+3;
-           }
+            }else if (tempArray[n] <= 18.40 && tempArray[n] > 18.20){
+                buff[p]= 0 ;buff[p+1]=  0 ;buff[p+2]=  36  ;
+                p = p+3;
+            }else if (tempArray[n] <= 18.60 && tempArray[n] > 18.40){
+                buff[p]= 0 ;buff[p+1]=  0 ;buff[p+2]=  51  ;
+                p = p+3;
+            }else if (tempArray[n] <= 18.80 && tempArray[n] > 18.60){
+                buff[p]= 0 ;buff[p+1]=  0 ;buff[p+2]=  66  ;
+                p = p+3;
+            }else if (tempArray[n] <= 19.00 && tempArray[n] > 18.80){
+                buff[p]= 0 ;buff[p+1]=  0 ;buff[p+2]=  81  ;
+                p = p+3;
+            }else if (tempArray[n] <= 19.20 && tempArray[n] > 19.00){
+                buff[p]= 2 ;buff[p+1]=  0 ;buff[p+2]=  90  ;
+                p = p+3;
+            }else if (tempArray[n] <= 19.40 && tempArray[n] > 19.20){
+                buff[p]= 4 ;buff[p+1]=  0 ;buff[p+2]=  99  ;
+                p = p+3;
+            }else if (tempArray[n] <= 19.60 && tempArray[n] > 19.40){
+                buff[p]= 7 ;buff[p+1]=  0 ;buff[p+2]=  106  ;
+                p = p+3;
+            }else if (tempArray[n] <= 19.80 && tempArray[n] > 19.60){
+                buff[p]= 11 ;buff[p+1]=  0 ;buff[p+2]=  115  ;
+                p = p+3;
+            }else if (tempArray[n] <= 20.00 && tempArray[n] > 19.80){
+                buff[p]= 14 ;buff[p+1]=  0 ;buff[p+2]=  119  ;
+                p = p+3;
+            }else if (tempArray[n] <= 20.20 && tempArray[n] > 20.00 ){
+                buff[p]= 20 ;buff[p+1]=  0 ;buff[p+2]=  123  ;
+                p = p+3;
+            }else if (tempArray[n] <= 20.40 && tempArray[n] > 20.20){
+                buff[p]= 27 ;buff[p+1]=  0 ;buff[p+2]=  128  ;
+                p = p+3;
+            }else if (tempArray[n] <= 20.60 && tempArray[n] > 20.40){
+                buff[p]= 33 ;buff[p+1]=  0 ;buff[p+2]=  133  ;
+                p = p+3;
+            }else if (tempArray[n] <= 20.80 && tempArray[n] > 20.60){
+                buff[p]= 41 ;buff[p+1]=  0 ;buff[p+2]=  137  ;
+                p = p+3;
+            }else if (tempArray[n] <= 21.00 && tempArray[n] > 20.80){
+                buff[p]= 48 ;buff[p+1]=  0 ;buff[p+2]=  140  ;
+                p = p+3;
+            }else if (tempArray[n] <= 21.20 && tempArray[n] > 21.00){
+                buff[p]= 55 ;buff[p+1]=  0 ;buff[p+2]=  143  ;
+                p = p+3;
+            }else if (tempArray[n] <= 21.40 && tempArray[n] > 21.20){
+                buff[p]= 61 ;buff[p+1]=  0 ;buff[p+2]=  146  ;
+                p = p+3;
+            }else if (tempArray[n] <= 21.60 && tempArray[n] > 21.40){
+                buff[p]= 66 ;buff[p+1]=  0 ;buff[p+2]=  149  ;
+                p = p+3;
+            }else if (tempArray[n] <= 21.80 && tempArray[n] > 21.60){
+                buff[p]= 72 ;buff[p+1]=  0 ;buff[p+2]=  150  ;
+                p = p+3;
+            }else if (tempArray[n] <= 22.00 && tempArray[n] > 21.80){
+                buff[p]= 78 ;buff[p+1]=  0 ;buff[p+2]=  151  ;
+                p = p+3;
+            }else if (tempArray[n] <= 22.20 && tempArray[n] > 22.00){
+                buff[p]= 84 ;buff[p+1]=  0 ;buff[p+2]=  152  ;
+                p = p+3;
+            }else if (tempArray[n] <= 22.40 && tempArray[n] > 22.20){
+                buff[p]= 91 ;buff[p+1]=  0 ;buff[p+2]=  153  ;
+                p = p+3;
+            }else if (tempArray[n] <= 22.60 && tempArray[n] > 22.40){
+                buff[p]= 97 ;buff[p+1]=  0 ;buff[p+2]=  155  ;
+                p = p+3;
+            }else if (tempArray[n] <= 22.80 && tempArray[n] > 22.60){
+                buff[p]= 104 ;buff[p+1]=  0 ;buff[p+2]=  155  ;
+                p = p+3;
+            }else if (tempArray[n] <= 23.00 && tempArray[n] > 22.80){
+                buff[p]= 110 ;buff[p+1]=  0 ;buff[p+2]=  156  ;
+                p = p+3;
+            }else if (tempArray[n] <= 23.20 && tempArray[n] > 23.00){
+                buff[p]= 115 ;buff[p+1]=  0 ;buff[p+2]=  157  ;
+                p = p+3;
+            }else if (tempArray[n] <= 23.40 && tempArray[n] > 23.20){
+                buff[p]= 122 ;buff[p+1]=  0 ;buff[p+2]=  157  ;
+                p = p+3;
+            }else if (tempArray[n] <= 23.60 && tempArray[n] > 23.40){
+                buff[p]= 128 ;buff[p+1]=  0 ;buff[p+2]=  157  ;
+                p = p+3;
+            }else if (tempArray[n] <= 23.80 && tempArray[n] > 23.60){
+                buff[p]= 134 ;buff[p+1]=  0 ;buff[p+2]=  157  ;
+                p = p+3;
+            }else if (tempArray[n] <= 24.00 && tempArray[n] > 23.80){
+                buff[p]= 139 ;buff[p+1]=  0 ;buff[p+2]=  157  ;
+                p = p+3;
+            }else if (tempArray[n] <= 24.20 && tempArray[n] > 24.00){
+                buff[p]= 146 ;buff[p+1]=  0 ;buff[p+2]=  156  ;
+                p = p+3;
+            }else if (tempArray[n] <= 24.40 && tempArray[n] > 24.20){
+                buff[p]= 152 ;buff[p+1]=  0 ;buff[p+2]=  155  ;
+                p = p+3;
+            }else if (tempArray[n] <= 24.60 && tempArray[n] > 24.40){
+                buff[p]= 157 ;buff[p+1]=  0 ;buff[p+2]=  155  ;
+                p = p+3;
+            }else if (tempArray[n] <= 24.80 && tempArray[n] > 24.60){
+                buff[p]= 162 ;buff[p+1]=  0 ;buff[p+2]=  155  ;
+                p = p+3;
+            }else if (tempArray[n] <= 25.00 && tempArray[n] > 24.80){
+                buff[p]= 167 ;buff[p+1]=  0 ;buff[p+2]=  154  ;
+                p = p+3;
+            }else if (tempArray[n] <= 25.20 && tempArray[n] > 25.00){
+                buff[p]= 171 ;buff[p+1]=  0 ;buff[p+2]=  153  ;
+                p = p+3;
+            }else if (tempArray[n] <= 25.40 && tempArray[n] > 25.20){
+                buff[p]= 175 ;buff[p+1]=  1 ;buff[p+2]=  152  ;
+                p = p+3;
+            }else if (tempArray[n] <= 25.60 && tempArray[n] > 25.40){
+                buff[p]= 178 ;buff[p+1]=  1 ;buff[p+2]=  151  ;
+                p = p+3;
+            }else if (tempArray[n] <= 25.80 && tempArray[n] > 25.60){
+                buff[p]= 182 ;buff[p+1]=  2 ;buff[p+2]=  149  ;
+                p = p+3;
+            }else if (tempArray[n] <= 26.00 && tempArray[n] > 25.80){
+                buff[p]= 185 ;buff[p+1]=  4 ;buff[p+2]=  149  ;
+                p = p+3;
+            }else if (tempArray[n] <= 26.20 && tempArray[n] > 26.00){
+                buff[p]= 188 ;buff[p+1]=  5 ;buff[p+2]=  147  ;
+                p = p+3;
+            }else if (tempArray[n] <= 26.40 && tempArray[n] > 26.20){
+                buff[p]= 191 ;buff[p+1]=  6 ;buff[p+2]=  146  ;
+                p = p+3;
+            }else if (tempArray[n] <= 26.60 && tempArray[n] > 26.40){
+                buff[p]= 193 ;buff[p+1]=  8 ;buff[p+2]=  144  ;
+                p = p+3;
+            }else if (tempArray[n] <= 26.80 && tempArray[n] > 26.60){
+                buff[p]= 195 ;buff[p+1]=  11 ;buff[p+2]=  142  ;
+                p = p+3;
+            }else if (tempArray[n] <= 27.00 && tempArray[n] > 26.80){
+                buff[p]= 198 ;buff[p+1]=  13 ;buff[p+2]=  139  ;
+                p = p+3;
+            }else if (tempArray[n] <= 27.20 && tempArray[n] > 27.00){
+                buff[p]= 201 ;buff[p+1]=  17 ;buff[p+2]=  135  ;
+                p = p+3;
+            }else if (tempArray[n] <= 27.40 && tempArray[n] > 27.20){
+                buff[p]= 203 ;buff[p+1]=  20 ;buff[p+2]=  132  ;
+                p = p+3;
+            }else if (tempArray[n] <= 27.60 && tempArray[n] > 27.40){
+                buff[p]= 206 ;buff[p+1]=  23 ;buff[p+2]=  127  ;
+                p = p+3;
+            }else if (tempArray[n] <= 27.80 && tempArray[n] > 27.60){
+                buff[p]= 208 ;buff[p+1]=  26 ;buff[p+2]=  121  ;
+                p = p+3;
+            }else if (tempArray[n] <= 28.00 && tempArray[n] > 27.80){
+                buff[p]= 210 ;buff[p+1]=  29 ;buff[p+2]=  116  ;
+                p = p+3;
+            }else if (tempArray[n] <= 28.20 && tempArray[n] > 28.00){
+                buff[p]= 212 ;buff[p+1]=  33 ;buff[p+2]=  111  ;
+                p = p+3;
+            }else if (tempArray[n] <= 28.40 && tempArray[n] > 28.20){
+                buff[p]= 214 ;buff[p+1]=  37 ;buff[p+2]=  103  ;
+                p = p+3;
+            }else if (tempArray[n] <= 28.60 && tempArray[n] > 28.40){
+                buff[p]= 217 ;buff[p+1]=  41 ;buff[p+2]=  97  ;
+                p = p+3;
+            }else if (tempArray[n] <= 28.80 && tempArray[n] > 28.60){
+                buff[p]= 219 ;buff[p+1]=  46 ;buff[p+2]=  89  ;
+                p = p+3;
+            }else if (tempArray[n] <= 29.00 && tempArray[n] > 28.80){
+                buff[p]= 221 ;buff[p+1]=  49 ;buff[p+2]=  78  ;
+                p = p+3;
+            }else if (tempArray[n] <= 29.20 && tempArray[n] > 29.00){
+                buff[p]= 223 ;buff[p+1]=  53 ;buff[p+2]=  66  ;
+                p = p+3;
+            }else if (tempArray[n] <= 29.40 && tempArray[n] > 29.20){
+                buff[p]= 224 ;buff[p+1]=  56 ;buff[p+2]=  54  ;
+                p = p+3;
+            }else if (tempArray[n] <= 29.60 && tempArray[n] > 29.40){
+                buff[p]= 226 ;buff[p+1]=  60 ;buff[p+2]=  42  ;
+                p = p+3;
+            }else if (tempArray[n] <= 29.80 && tempArray[n] > 29.60){
+                buff[p]= 228 ;buff[p+1]=  64 ;buff[p+2]=  30  ;
+                p = p+3;
+            }else if (tempArray[n] <= 30.00 && tempArray[n] > 29.80){
+                buff[p]= 229 ;buff[p+1]=  68 ;buff[p+2]=  25  ;
+                p = p+3;
+            }else if (tempArray[n] <= 30.20 && tempArray[n] > 30.00){
+                buff[p]= 231 ;buff[p+1]=  72 ;buff[p+2]=  20  ;
+                p = p+3;
+            }else if (tempArray[n] <= 30.40 && tempArray[n] > 30.20){
+                buff[p]= 232 ;buff[p+1]=  76 ;buff[p+2]=  16  ;
+                p = p+3;
+            }else if (tempArray[n] <= 30.60 && tempArray[n] > 30.40){
+                buff[p]= 234 ;buff[p+1]=  78 ;buff[p+2]=  12  ;
+                p = p+3;
+            }else if (tempArray[n] <= 30.80 && tempArray[n] > 30.60){
+                buff[p]= 235 ;buff[p+1]=  82 ;buff[p+2]=  10  ;
+                p = p+3;
+            }else if (tempArray[n] <= 31.00 && tempArray[n] > 30.80){
+                buff[p]= 236 ;buff[p+1]=  86 ;buff[p+2]=  8  ;
+                p = p+3;
+            }else if (tempArray[n] <= 31.20 && tempArray[n] > 31.00){
+                buff[p]= 237 ;buff[p+1]=  90 ;buff[p+2]=  7  ;
+                p = p+3;
+            }else if (tempArray[n] <= 31.40 && tempArray[n] > 31.20){
+                buff[p]= 238 ;buff[p+1]=  93 ;buff[p+2]=  5  ;
+                p = p+3;
+            }else if (tempArray[n] <= 31.60 && tempArray[n] > 31.40){
+                buff[p]= 239 ;buff[p+1]=  96 ;buff[p+2]=  4  ;
+                p = p+3;
+            }else if (tempArray[n] <= 31.80 && tempArray[n] > 31.60){
+                buff[p]= 240 ;buff[p+1]=  100 ;buff[p+2]=  3  ;
+                p = p+3;
+            }else if (tempArray[n] <= 32.00 && tempArray[n] > 31.80){
+                buff[p]= 241 ;buff[p+1]=  103 ;buff[p+2]=  3  ;
+                p = p+3;
+            }else if (tempArray[n] <= 32.20 && tempArray[n] > 32.00){
+                buff[p]= 241 ;buff[p+1]=  106 ;buff[p+2]=  2  ;
+                p = p+3;
+            }else if (tempArray[n] <= 32.40 && tempArray[n] > 32.20){
+                buff[p]= 242 ;buff[p+1]=  109 ;buff[p+2]=  1  ;
+                p = p+3;
+            }else if (tempArray[n] <= 32.60 && tempArray[n] > 32.40){
+                buff[p]= 243 ;buff[p+1]=  113 ;buff[p+2]=  1  ;
+                p = p+3;
+            }else if (tempArray[n] <= 32.80 && tempArray[n] > 32.60){
+                buff[p]= 244 ;buff[p+1]=  116 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 33.00 && tempArray[n] > 32.80){
+                buff[p]= 244 ;buff[p+1]=  120 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 33.20 && tempArray[n] > 33.00){
+                buff[p]= 245 ;buff[p+1]=  125 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 33.40 && tempArray[n] > 33.20){
+                buff[p]= 246 ;buff[p+1]=  129 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 33.60 && tempArray[n] > 33.40){
+                buff[p]= 247 ;buff[p+1]=  133 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 33.80 && tempArray[n] > 33.60){
+                buff[p]= 248 ;buff[p+1]=  136 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 34.00 && tempArray[n] > 33.80){
+                buff[p]= 248 ;buff[p+1]=  139 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 34.20 && tempArray[n] > 34.00){
+                buff[p]= 249 ;buff[p+1]=  142 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <=  34.40 && tempArray[n] > 34.20){
+                buff[p]= 249 ;buff[p+1]=  145 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 34.60 && tempArray[n] > 34.40){
+                buff[p]= 250 ;buff[p+1]=  149 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 34.80 && tempArray[n] > 34.60){
+                buff[p]= 251 ;buff[p+1]=  154 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 35.00 && tempArray[n] > 34.80){
+                buff[p]= 252 ;buff[p+1]=  159 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 35.20 && tempArray[n] > 35.00){
+                buff[p]= 253 ;buff[p+1]=  163 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 35.40 && tempArray[n] > 35.20){
+                buff[p]= 253 ;buff[p+1]=  168 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 35.60 && tempArray[n] > 35.40){
+                buff[p]= 253 ;buff[p+1]=  172 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 35.80 && tempArray[n] > 35.60){
+                buff[p]= 254 ;buff[p+1]=  176 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 36.00 && tempArray[n] > 35.80){
+                buff[p]= 254 ;buff[p+1]=  179 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 36.20 && tempArray[n] > 36.00){
+                buff[p]= 254 ;buff[p+1]=  184 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 36.40 && tempArray[n] > 36.20){
+                buff[p]= 254 ;buff[p+1]=  187 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 36.60 && tempArray[n] > 36.40){
+                buff[p]= 254 ;buff[p+1]=  191 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 36.80 && tempArray[n] > 36.60){
+                buff[p]= 254 ;buff[p+1]=  195 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 37.00 && tempArray[n] > 36.80){
+                buff[p]= 254 ;buff[p+1]=  199 ;buff[p+2]=  0  ;
+                p = p+3;
+            }else if (tempArray[n] <= 37.20 && tempArray[n] > 37.00){
+                buff[p]= 254 ;buff[p+1]=  202 ;buff[p+2]=  1  ;
+                p = p+3;
+            }else if (tempArray[n] <= 37.40 && tempArray[n] > 37.20){
+                buff[p]= 254 ;buff[p+1]=  205 ;buff[p+2]=  2  ;
+                p = p+3;
+            }else if (tempArray[n] <= 37.60 && tempArray[n] > 37.40){
+                buff[p]= 254 ;buff[p+1]=  208 ;buff[p+2]=  5  ;
+                p = p+3;
+            }else if (tempArray[n] <= 37.80 && tempArray[n] > 37.60){
+                buff[p]= 254 ;buff[p+1]=  212 ;buff[p+2]=  9  ;
+                p = p+3;
+            }else if (tempArray[n] <= 38.00 && tempArray[n] > 37.80){
+                buff[p]= 254 ;buff[p+1]=  216 ;buff[p+2]=  12  ;
+                p = p+3;
+            }else if (tempArray[n] <= 38.20 && tempArray[n] > 38.00){
+                buff[p]= 255 ;buff[p+1]=  219 ;buff[p+2]=  15  ;
+                p = p+3;
+            }else if (tempArray[n] <= 38.40 && tempArray[n] > 38.20){
+                buff[p]= 255 ;buff[p+1]=  221 ;buff[p+2]=  23  ;
+                p = p+3;
+            }else if (tempArray[n] <= 38.60 && tempArray[n] > 38.40){
+                buff[p]= 255 ;buff[p+1]=  224 ;buff[p+2]=  32  ;
+                p = p+3;
+            }else if (tempArray[n] <= 38.80 && tempArray[n] > 38.60){
+                buff[p]= 255 ;buff[p+1]=  227 ;buff[p+2]=  39  ;
+                p = p+3;
+            }else if (tempArray[n] <= 39.00 && tempArray[n] > 38.80){
+                buff[p]= 255 ;buff[p+1]=  229 ;buff[p+2]=  50  ;
+                p = p+3;
+            }else if (tempArray[n] <= 39.20 && tempArray[n] > 39.00){
+                buff[p]= 255 ;buff[p+1]=  232 ;buff[p+2]=  63  ;
+                p = p+3;
+            }else if (tempArray[n] <= 39.40 && tempArray[n] > 39.20){
+                buff[p]= 255 ;buff[p+1]=  235 ;buff[p+2]=  75  ;
+                p = p+3;
+            }else if (tempArray[n] <= 39.60 && tempArray[n] > 39.40){
+                buff[p]= 255 ;buff[p+1]=  238 ;buff[p+2]=  88  ;
+                p = p+3;
+            }else if (tempArray[n] <= 39.80 && tempArray[n] > 39.60){
+                buff[p]= 255 ;buff[p+1]=  239 ;buff[p+2]=  102  ;
+                p = p+3;
+            }else if (tempArray[n] <= 40.00 && tempArray[n] > 39.80){
+                buff[p]= 255 ;buff[p+1]=  241 ;buff[p+2]=  116  ;
+                p = p+3;
+            }else if (tempArray[n] <= 40.20 && tempArray[n] > 40.00){
+                buff[p]= 255 ;buff[p+1]=  242 ;buff[p+2]=  134  ;
+                p = p+3;
+            }else if (tempArray[n] <= 40.40 && tempArray[n] > 40.20){
+                buff[p]= 255 ;buff[p+1]=  244 ;buff[p+2]=  149  ;
+                p = p+3;
+            }else if (tempArray[n] <= 40.80 && tempArray[n] > 40.60){
+                buff[p]= 255 ;buff[p+1]=  245 ;buff[p+2]=  164  ;
+                p = p+3;
+            }else if (tempArray[n] <= 41.00 && tempArray[n] > 40.80){
+                buff[p]= 255 ;buff[p+1]=  247 ;buff[p+2]=  179  ;
+                p = p+3;
+            }else if (tempArray[n] <= 41.20 && tempArray[n] > 41.00){
+                buff[p]= 255 ;buff[p+1]=  248 ;buff[p+2]=  192  ;
+                p = p+3;
+            }else if (tempArray[n] <= 41.40 && tempArray[n] > 41.20){
+                buff[p]= 255 ;buff[p+1]=  249 ;buff[p+2]=  203  ;
+                p = p+3;
+            }else if (tempArray[n] <= 41.60 && tempArray[n] > 41.40){
+                buff[p]= 255 ;buff[p+1]=  251 ;buff[p+2]=  216  ;
+                p = p+3;
+            }else if (tempArray[n] <= 41.80 && tempArray[n] > 41.60){
+                buff[p]= 255 ;buff[p+1]=  253 ;buff[p+2]=  228  ;
+                p = p+3;
+            }else if (tempArray[n] <= 42.00 && tempArray[n] > 41.80){
+                buff[p]= 255 ;buff[p+1]=  254 ;buff[p+2]=  239;
+                p = p+3;
+            }
         }
 
         paintMat.put(0,0, buff);
