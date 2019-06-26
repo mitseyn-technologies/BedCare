@@ -1,3 +1,41 @@
 <resources>
-    <string name="app_name">TutorialOpenCv</string>
+    <string name="app_name">BedCare</string>
+
+    <!--Informacion Paciente-->
+
+
+    <string name="estado">Estado de la conexión:</string>
+
+    <string name="pacientes">Pacientes</string>
+    <string name="config">Configuración</string>
+    <string name="mainmenu">Menu BedCare</string>
+    <string name="menuPatient">Menu Pacientes</string>
+    <string name="showPatient">Datos del paciente</string>
+
+    <string name="addPatient">Agregar Paciente</string>
+    <string name="notifications">Notificaciones</string>
+
+
+    <!--Menu Paciente-->
+    <string name="search">Buscar Paciente</string>
+    <string name="add">Añadir Paciente</string>
+    <string name="edit">Editar Paciente</string>
+    <string name="delete">Eliminar Paciente</string>
+
+    <string name="id">ID:</string>
+    <string name="nombre">Nombre:</string>
+    <string name="apellido">Apellido:</string>
+    <string name="cedula">Cedula de Identidad:</string>
+    <string name="edad">Edad:</string>
+    <string name="fechaingreso">Fecha ingreso:</string>
+    <string name="medico">Medico Encargado:</string>
+    <string name="observacion">Observación:</string>
+    <string name="causapostracion">Causa Postración:</string>
+
+    <string name="statePatient">Estado Paciente</string>
+
+
+
+
+
 </resources>
