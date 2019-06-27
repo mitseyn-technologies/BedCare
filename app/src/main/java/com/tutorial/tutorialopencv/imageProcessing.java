@@ -121,6 +121,8 @@ public class imageProcessing extends AppCompatActivity {
             ScaneoViejo = false;
         }
 
+        permissions();
+
         Ini_Detect_BLE();
         InitElements();
         ActionsElements();
@@ -1348,6 +1350,15 @@ public class imageProcessing extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         CloseActivity();
+        go_toShowPatient();
+
+    }
+
+    private void go_toShowPatient()
+    {
+            Intent go_ImageP = new Intent(imageProcessing.this,ShowPatient.class);
+            startActivity(go_ImageP);
+
     }
 
     private void CloseActivity() {
