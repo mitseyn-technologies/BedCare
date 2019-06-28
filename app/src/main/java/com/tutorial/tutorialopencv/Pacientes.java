@@ -1,12 +1,32 @@
 package com.tutorial.tutorialopencv;
 
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
+
+import static android.provider.Telephony.Mms.Part.FILENAME;
 
 
 @SuppressWarnings("serial")
 public class Pacientes implements Serializable {
+
+    private static final String TAG = imageProcessing.class.getSimpleName();
 
     private String name;
     private String apellido;
@@ -17,78 +37,102 @@ public class Pacientes implements Serializable {
     private int ID;
     private String fecha_ingreso;
     private String cedula;//Añadir al constructor
+    private InputStream fileFromTxt;
     public ArrayList<Pacientes> list_Pacientes;
 
     public int id_total = 0;
 
+    private Context context;
 
-    public Pacientes(){
-        list_Pacientes = fillArray();
+    private String pacienteFormTXT;
+    private BufferedReader reader;
+
+    private String[] line_temp = new String[10];
+    private String NOTE = "pacientes.txt";
+
+    public Pacientes( Context context)
+    {
+        this.context = context;
+        list_Pacientes = new ArrayList<>();
 
     }
 
+    public Pacientes()
+    {
 
-    public Pacientes(int ID, String name, String apellido, String cedula, String observacion, String causa_postracion,
-                     String medico, int edad, String ingreso)
+    }
+
+    public Pacientes(int ID, String name, String apellido, String cedula,String medico,
+                     int edad, String ingreso, String observacion, String causa_postracion)
     {
         this.ID = ID;
-        this.id_total = id_total + ID;
         this.name = name;
         this.apellido = apellido;
-        this.observacion = observacion;
-        this.causa_postracion = causa_postracion;
+        this.cedula = cedula;
         this.medico_aCargo = medico;
         this.edad = edad;
         this.fecha_ingreso = ingreso;
-        this.cedula = cedula;
+        this.observacion = observacion;
+        this.causa_postracion = causa_postracion;
 
     }
 
-    private ArrayList<Pacientes> fillArray()
+
+    public void splitString(String p)
+    {
+        Toast.makeText(context,p,Toast.LENGTH_LONG).show();
+
+        //separa por dato del paciente
+            StringTokenizer st = new StringTokenizer(p, "|");
+            String nombre = st.nextToken();
+            String apellido = st.nextToken();
+            String cedula = st.nextToken();
+            String medico = st.nextToken();
+            int edad = Integer.parseInt(st.nextToken());
+            String fecha = st.nextToken();
+            String obs = st.nextToken();
+            String causa = st.nextToken();
+            Pacientes p_result = new Pacientes(id_total, nombre, apellido, cedula, medico, edad, fecha, obs, causa);
+            id_total++;
+            this.list_Pacientes.add(p_result);
+
+    }
+
+
+
+    public void readFile(InputStream inputStream)
     {
 
-        ArrayList<Pacientes> lista = new ArrayList<>();
-
-        Pacientes p = new Pacientes(0,"Roberto","Castillo","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Igor Stravski", 80, "20/03/2009");
-
-        Pacientes p1 = new Pacientes(1,"Carlos","Villa","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Manuel Padilla", 90, "20/03/2009");
-
-        Pacientes p2 = new Pacientes(2,"Ernesto","Faundez","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Igor Stravski", 97, "20/03/2009");
-
-        Pacientes p3 = new Pacientes(3,"Maria","Contreras","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Manuel Padilla", 84, "20/03/2009");
-
-        Pacientes p4 = new Pacientes(4,"Marcelo","Vera","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Jose Salazar", 78, "20/03/2009");
-
-        Pacientes p5 = new Pacientes(5,"Florencia","Zamora","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Jose Salazar", 67, "20/03/2009");
-
-        Pacientes p6 = new Pacientes(6,"Petronila","Hernandez","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Igor Stravski", 69, "20/03/2009");
-
-        Pacientes p7 = new Pacientes(7,"Ernesto","Flores","6.235.522-2","Son varias las causas, lo principal es que","Inmovilidad en piernas",
-                "Igor Stravski", 91, "20/03/2009");
+        int i = 0;
+        try{
+            final InputStream file = inputStream;
+            reader = new BufferedReader(new InputStreamReader(file));
 
 
-        lista.add(p);
-        lista.add(p1);
-        lista.add(p2);
-        lista.add(p3);
-        lista.add(p4);
-        lista.add(p5);
-        lista.add(p6);
-        lista.add(p7);
+            String line = reader.readLine();
+            while (line != null) {
+                splitString(line);                // read next line
+                line = reader.readLine();
+            }
+            reader.close();
 
-        return lista;
+
+        } catch(IOException ioe){
+            ioe.printStackTrace();
+        }
+
+
     }
+
 
     public ArrayList<Pacientes> getList_Pacientes() {
         return list_Pacientes;
     }
+
+
+
+
+
 
     public void setList_Pacientes(ArrayList<Pacientes> list_Pacientes) {
         this.list_Pacientes = list_Pacientes;

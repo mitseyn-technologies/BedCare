@@ -4,18 +4,21 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class List_Patient extends AppCompatActivity {
 
+    private static final String TAG = List_Patient.class.getSimpleName();;
     private ListView listView;
     private String []StringArray;
     public ArrayList<Pacientes> list_Pacientes;
@@ -26,16 +29,25 @@ public class List_Patient extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_patient);
 
-        if(getIntent().getExtras().getSerializable("parametro") != null) {
-            pacienteFromAdd = (Pacientes) getIntent().getExtras().getSerializable("parametro");
-        }
-
-        p = new Pacientes();
 
 
-        StringArray = new String[8];
+
+        InputStream XmlFileInputStream = getResources().openRawResource(R.raw.pacientes); // getting XM1
+
+        p = new Pacientes(this);
+
+
+            Intent intent = this.getIntent();
+            Bundle bundle = intent.getExtras();
+            if(bundle != null) {
+                Pacientes p_new = (Pacientes)bundle.getSerializable("MyNewPerson");
+                p.addPaciente(p_new);
+            }
+        p.readFile(XmlFileInputStream);
+
+
         list_Pacientes = p.getList_Pacientes();
-
+        StringArray = new String[list_Pacientes.size()];
         fillStringArray();
 
 
@@ -66,7 +78,6 @@ public class List_Patient extends AppCompatActivity {
 
     private void fillStringArray()
     {
-        p.addPaciente(pacienteFromAdd);
 
         for (int i = 0; i < StringArray.length;i++)
         {

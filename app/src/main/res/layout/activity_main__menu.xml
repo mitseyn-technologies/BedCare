@@ -23,7 +23,7 @@
             android:background="@color/colorAccent"
             android:text="@string/pacientes"
             android:textColor="@color/colorText"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
@@ -37,7 +37,21 @@
             android:background="@color/colorAccent"
             android:text="@string/notifications"
             android:textColor="@color/colorText"
-            android:textSize="24sp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="55dp" />
+
+        <Button
+            android:id="@+id/btnPacientes2"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:background="@color/colorAccent"
+            android:text="@string/pacientes"
+            android:textColor="@color/colorText"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <Space
