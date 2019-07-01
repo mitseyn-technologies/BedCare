@@ -1,6 +1,8 @@
 package com.tutorial.tutorialopencv;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,21 +13,52 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class ShowPatient extends AppCompatActivity {
+public class ShowPatient extends Activity {
 
-    private TextView txtName, txtApellido, txtID,txtCedula,txtEdad,txtFecha,txtMedico,txtObservacion,txtCausa;
+    private TextView txtName, txtApellido, txtID,txtCedula,txtEdad,
+                     txtFecha,txtMedico,txtObservacion,txtCausa;
     private Button btn_StatePatient;
+
     private Pacientes paciente;
 
+    private PacientesDbAdapter dbAdapter;
+    private Cursor cursor;
+    //
+    // Modo del formulario
+    //
+    private int modo ;
+
+    //
+    // Identificador del registro que se edita cuando la opción es MODIFICAR
+    //
+    private long id ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_patient);
-        setTitle(R.string.showPatient);
+
+        Intent intent = getIntent();
+        Bundle extra = intent.getExtras();
+
+        if (extra == null) return;
 
         InitElements();
         Actionelements();
+
+        dbAdapter = new PacientesDbAdapter(this);
+        dbAdapter.open();
+
+        if (extra.containsKey(PacientesDbAdapter.P_COLUMNA_ID))
+        {
+            id = extra.getLong(PacientesDbAdapter.P_COLUMNA_ID);
+            consultar(id);
+        }
+
+        //
+        // Establecemos el modo del formulario
+        //
+        establecerModo(extra.getInt(List_Patient.P_MODO));
     }
 
     private void InitElements()
@@ -43,21 +76,6 @@ public class ShowPatient extends AppCompatActivity {
         txtObservacion = findViewById(R.id.txt_observacion);
         txtCausa = findViewById(R.id.txt_CausaP);
 
-        paciente = (Pacientes)getIntent().getExtras().getSerializable("parametro");
-
-        //Fill texto
-
-        txtID.setText(String.valueOf(paciente.getID()));
-        txtName.setText(paciente.getName());
-        txtApellido.setText(paciente.getApellido());
-        txtCedula.setText(paciente.getCedula());
-        txtEdad.setText(String.valueOf(paciente.getEdad()));
-        txtFecha.setText(paciente.getFecha_ingreso().toString());
-        txtMedico.setText(paciente.getMedico_aCargo());
-        txtObservacion.setText(paciente.getObservacion());
-        txtCausa.setText(paciente.getCausa_postracion());
-
-        Toast.makeText(getApplicationContext(),paciente.getName(),Toast.LENGTH_LONG).show();
     }
 
     private void Actionelements()
@@ -69,6 +87,48 @@ public class ShowPatient extends AppCompatActivity {
             }
         });
     }
+
+    private void establecerModo(int m)
+    {
+        this.modo = m ;
+
+        if (modo == List_Patient.P_VISUALIZAR)
+        {
+            this.setTitle(txtName.getText().toString());
+            this.setEdicion(false);
+        }
+    }
+    private void consultar(long id)
+    {
+        //
+        // Consultamos el centro por el identificador
+        //
+        cursor = dbAdapter.getRegistro(id);
+        txtID.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_ID)));
+
+        txtName.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_NOMBRE)));
+        txtApellido.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_APELLIDO)));
+        txtCedula.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_CEDULA)));
+        txtEdad.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_EDAD)));
+        txtFecha.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_FECHA)));
+        txtMedico.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_MEDICO)));
+        txtObservacion.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_OBSERVACION)));
+        txtCausa.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_CAUSA)));
+
+    }
+
+    private void setEdicion(boolean opcion)
+    {
+        txtName.setEnabled(opcion);
+        txtApellido.setEnabled(opcion);
+        txtCedula.setEnabled(opcion);
+        txtEdad.setEnabled(opcion);
+        txtFecha.setEnabled(opcion);
+        txtMedico.setEnabled(opcion);
+        txtObservacion.setEnabled(opcion);
+        txtCausa.setEnabled(opcion);
+    }
+
 
     private void go_toImageProcessing()
     {

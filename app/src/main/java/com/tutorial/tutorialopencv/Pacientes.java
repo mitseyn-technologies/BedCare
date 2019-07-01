@@ -44,11 +44,9 @@ public class Pacientes implements Serializable {
 
     private Context context;
 
-    private String pacienteFormTXT;
     private BufferedReader reader;
 
-    private String[] line_temp = new String[10];
-    private String NOTE = "pacientes.txt";
+
 
     public Pacientes( Context context)
     {
@@ -78,61 +76,10 @@ public class Pacientes implements Serializable {
     }
 
 
-    public void splitString(String p)
-    {
-        Toast.makeText(context,p,Toast.LENGTH_LONG).show();
-
-        //separa por dato del paciente
-            StringTokenizer st = new StringTokenizer(p, "|");
-            String nombre = st.nextToken();
-            String apellido = st.nextToken();
-            String cedula = st.nextToken();
-            String medico = st.nextToken();
-            int edad = Integer.parseInt(st.nextToken());
-            String fecha = st.nextToken();
-            String obs = st.nextToken();
-            String causa = st.nextToken();
-            Pacientes p_result = new Pacientes(id_total, nombre, apellido, cedula, medico, edad, fecha, obs, causa);
-            id_total++;
-            this.list_Pacientes.add(p_result);
-
-    }
-
-
-
-    public void readFile(InputStream inputStream)
-    {
-
-        int i = 0;
-        try{
-            final InputStream file = inputStream;
-            reader = new BufferedReader(new InputStreamReader(file));
-
-
-            String line = reader.readLine();
-            while (line != null) {
-                splitString(line);                // read next line
-                line = reader.readLine();
-            }
-            reader.close();
-
-
-        } catch(IOException ioe){
-            ioe.printStackTrace();
-        }
-
-
-    }
-
 
     public ArrayList<Pacientes> getList_Pacientes() {
         return list_Pacientes;
     }
-
-
-
-
-
 
     public void setList_Pacientes(ArrayList<Pacientes> list_Pacientes) {
         this.list_Pacientes = list_Pacientes;

@@ -15,7 +15,7 @@
     <string name="addPatient">Agregar Paciente</string>
     <string name="notifications">Notificaciones</string>
 
-
+    <string name="lista_vacia">Sin Datos</string>
     <!--Menu Paciente-->
     <string name="search">Buscar Paciente</string>
     <string name="add">Añadir Paciente</string>
