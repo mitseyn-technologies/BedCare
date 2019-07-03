@@ -23,7 +23,7 @@ public class List_Patient extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_patient);
 
-        lista = (ListView) findViewById(android.R.id.list);
+        lista =  findViewById(android.R.id.list);
 
         dbAdapter = new PacientesDbAdapter(this);
         dbAdapter.open();

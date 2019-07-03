@@ -1,10 +1,12 @@
 package com.tutorial.tutorialopencv;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Menu_Patient extends AppCompatActivity {
 
@@ -27,6 +29,14 @@ public class Menu_Patient extends AppCompatActivity {
         btn_Create =findViewById(R.id.addPatient);
         btn_Edit = findViewById(R.id.editPatient);
         btn_delete =findViewById(R.id.deletePatient);
+
+        dbHelper dbHelper = new dbHelper(getBaseContext());
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+
+        Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
+
     }
 
     private void ActiosElement()

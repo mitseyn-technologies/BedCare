@@ -7,14 +7,9 @@
     android:background="@color/colorPrimary"
     tools:context=".List_Patient">
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/colorText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+    <ListView android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
