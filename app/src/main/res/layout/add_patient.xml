@@ -2,147 +2,133 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/addpaciente"
+        android:textAlignment="center"
+        android:textColor="@color/colorText"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="62dp" />
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="405dp"
-        android:layout_height="598dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="18dp"
+        android:id="@+id/linearLayout6"
+        android:layout_width="354dp"
+        android:layout_height="468dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnIngresar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="119dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="69dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView17"
-                android:layout_width="161dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="10dp"
-                android:text="Nombre"
-                android:textSize="18sp" />
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/nombre"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edit_nombre"
-                android:layout_width="180dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:ems="10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5"
                 android:inputType="textPersonName"
                 android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="57dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/apellido"
-                android:layout_width="128dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
-                android:text="@string/apellido"
-                android:textAlignment="textStart"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/editApellido"
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:text="@string/apellido"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_apellido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5"
+                android:inputType="textPersonName"
+                android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView19"
-                android:layout_width="166dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="28dp"
-                android:text="Edad"
-                android:textSize="18sp" />
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cedula"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edit_edad"
-                android:layout_width="158dp"
+                android:id="@+id/edit_cedula"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:ems="10"
+                android:layout_weight="1"
+                android:ems="5"
                 android:inputType="number"
                 android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView16"
-                android:layout_width="174dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
-                android:text="Fecha de Ingreso"
-                android:textSize="18sp" />
-
-            <EditText
-                android:id="@+id/edit_fecha"
-                android:layout_width="175dp"
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="8dp"
-                android:ems="10"
-                android:inputType="date"
-                android:textAlignment="viewEnd" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="176dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
-                android:text="Cédula"
-                android:textSize="18sp" />
+                android:layout_weight="1"
+                android:text="@string/edad"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edit_cedula"
-                android:layout_width="182dp"
-                android:layout_height="43dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:ems="10"
+                android:id="@+id/edit_edad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5"
                 android:inputType="number"
                 android:textAlignment="viewEnd" />
 
@@ -154,104 +140,145 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView15"
-                android:layout_width="152dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Personal Médico"
-                android:textSize="18sp" />
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/fechaingreso"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edit_fecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="5"
+                android:inputType="date"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/medico"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edit_medico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
+                android:layout_weight="1"
+                android:ems="5"
                 android:inputType="textPersonName"
                 android:textAlignment="viewEnd" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="138dp"
+            android:layout_height="76dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView22"
-                android:layout_width="170dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginBottom="160dp"
-                android:text="Observaciones"
-                android:textSize="18sp" />
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/observacion"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edit_observacion"
-                android:layout_width="225dp"
-                android:layout_height="83dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
-                android:ems="10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="5"
                 android:inputType="textPersonName"
                 android:textAlignment="viewEnd" />
-
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="257dp"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Causa de Postración"
-                android:textAlignment="textEnd"
-                android:textSize="18sp" />
+                android:layout_weight="1"
+                android:text="@string/causapostracion"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edit_postracion"
-                android:layout_width="235dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/edit_causa"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="5"
                 android:inputType="textPersonName"
-                android:textAlignment="center" />
+                android:textAlignment="viewEnd" />
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button10"
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="58dp"
-        android:text="Cancelar"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="10dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="10dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="147dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/cancel"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline7"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toEndOf="@+id/btnIngresar"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btnIngresar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:text="Ingresar"
+        android:layout_width="147dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/addPatient"
+        android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Información del Paciente"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout4" />
-
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
+        app:layout_constraintVertical_bias="1.0" />
 </android.support.constraint.ConstraintLayout>

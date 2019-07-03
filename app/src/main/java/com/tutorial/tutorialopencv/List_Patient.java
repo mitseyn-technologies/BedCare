@@ -57,16 +57,6 @@ public class List_Patient extends ListActivity {
 
         visualizar(id);
     }
-    private void go_toShowPatient(Pacientes p)
-    {
-
-        Intent to_ShowPatient= new Intent(List_Patient.this,ShowPatient.class);
-        to_ShowPatient.putExtra("parametro", p);
-        startActivity(to_ShowPatient);
-        this.finish();
-    }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

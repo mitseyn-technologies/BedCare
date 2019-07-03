@@ -36,11 +36,11 @@ public class AddPatient extends AppCompatActivity {
         medico = findViewById(R.id.edit_medico);
         fecha = findViewById(R.id.edit_fecha);
         nombre = findViewById(R.id.edit_nombre);
-        apellido = findViewById(R.id.editApellido);
+        apellido = findViewById(R.id.edit_apellido);
         cedula = findViewById(R.id.edit_cedula);
         edad = findViewById(R.id.edit_edad);
         observacions = findViewById(R.id.edit_observacion);
-        postracion = findViewById(R.id.edit_postracion);
+        postracion = findViewById(R.id.edit_causa);
 
         btnIngresar = findViewById(R.id.btnIngresar);
     }
@@ -60,14 +60,6 @@ public class AddPatient extends AppCompatActivity {
                 p_New.setFecha_ingreso(fecha.getText().toString());
                 p_New.setObservacion(observacions.getText().toString());
                 p_New.setCausa_postracion(postracion.getText().toString());
-
-                //To pass:
-                Bundle bundle = new Bundle();
-                Intent extra = new Intent(getApplicationContext(),List_Patient.class);
-                bundle.putSerializable("MyNewPerson", p_New);
-                extra.putExtras(bundle);
-                startActivity(extra);
-
 
             }
         });

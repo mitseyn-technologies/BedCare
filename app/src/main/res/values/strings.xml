@@ -13,19 +13,22 @@
     <string name="showPatient">Datos del paciente</string>
 
     <string name="addPatient">Agregar Paciente</string>
+    <string name="cancel">Cancelar</string>
     <string name="notifications">Notificaciones</string>
+    <string name="information">Informacion Paciente</string>
 
     <string name="lista_vacia">Sin Datos</string>
     <!--Menu Paciente-->
     <string name="search">Buscar Paciente</string>
     <string name="add">Añadir Paciente</string>
+    <string name="addpaciente">Ingrese datos del Paciente</string>
     <string name="edit">Editar Paciente</string>
     <string name="delete">Eliminar Paciente</string>
 
     <string name="id">ID:</string>
     <string name="nombre">Nombre:</string>
     <string name="apellido">Apellido:</string>
-    <string name="cedula">Cedula de Identidad:</string>
+    <string name="cedula">Rut:</string>
     <string name="edad">Edad:</string>
     <string name="fechaingreso">Fecha ingreso:</string>
     <string name="medico">Medico Encargado:</string>

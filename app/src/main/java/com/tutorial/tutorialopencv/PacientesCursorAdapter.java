@@ -32,7 +32,7 @@ public class PacientesCursorAdapter extends CursorAdapter {
         TextView tv = (TextView) view ;
 
         tv.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_NOMBRE)));
-        //tv.append(" " + cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_APELLIDO)));
+        tv.append(" " + cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_APELLIDO)));
 
     }
 }
