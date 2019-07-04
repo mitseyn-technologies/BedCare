@@ -1,23 +1,22 @@
 package com.tutorial.tutorialopencv;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 public class ShowPatient extends Activity {
 
     private TextView txtName, txtApellido, txtID,txtCedula,txtEdad,
                      txtFecha,txtMedico,txtObservacion,txtCausa;
     private Button btn_StatePatient;
+    private Button btn_DeletePatient;
 
     private Pacientes paciente;
 
@@ -58,13 +57,14 @@ public class ShowPatient extends Activity {
         //
         // Establecemos el modo del formulario
         //
-        establecerModo(extra.getInt(List_Patient.P_MODO));
+        establecerModo(extra.getInt(List_Patient_Buscar.P_MODO));
     }
 
     private void InitElements()
     {
-        //Boton
+        //Botones
         btn_StatePatient = findViewById(R.id.btnState);
+        btn_DeletePatient = findViewById(R.id.btnDelete);
         //TextView
         txtID = findViewById(R.id.txt_id);
         txtName = findViewById(R.id.txt_name);
@@ -86,13 +86,20 @@ public class ShowPatient extends Activity {
                 go_toImageProcessing();
             }
         });
+
+        btn_DeletePatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                borrar(id);
+            }
+        });
     }
 
     private void establecerModo(int m)
     {
         this.modo = m ;
 
-        if (modo == List_Patient.P_VISUALIZAR)
+        if (modo == List_Patient_Buscar.P_VISUALIZAR)
         {
             this.setTitle(txtName.getText().toString());
             this.setEdicion(false);
@@ -129,6 +136,36 @@ public class ShowPatient extends Activity {
         txtCausa.setEnabled(opcion);
     }
 
+    private void borrar(final long id)
+    {
+        /**
+         * Borramos el registro con confirmación
+         */
+        AlertDialog.Builder dialogEliminar = new AlertDialog.Builder(this);
+
+        dialogEliminar.setIcon(android.R.drawable.ic_dialog_alert);
+        dialogEliminar.setTitle(getResources().getString(R.string.eliminar_titulo));
+        dialogEliminar.setMessage(getResources().getString(R.string.eliminar_mensaje));
+        dialogEliminar.setCancelable(false);
+
+        dialogEliminar.setPositiveButton(getResources().getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int boton) {
+                dbAdapter.delete(id);
+                Toast.makeText(ShowPatient.this, R.string.eliminar_confirmacion, Toast.LENGTH_SHORT).show();
+                /**
+                 * Devolvemos el control
+                 */
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
+        dialogEliminar.setNegativeButton(android.R.string.no, null);
+
+        dialogEliminar.show();
+
+    }
 
     private void go_toImageProcessing()
     {
@@ -139,7 +176,7 @@ public class ShowPatient extends Activity {
 
     private void go_toListPatient()
     {
-        Intent go_ListP= new Intent(ShowPatient.this, List_Patient.class);
+        Intent go_ListP= new Intent(ShowPatient.this, List_Patient_Buscar.class);
         startActivity(go_ListP);
         this.finish();
     }

@@ -1,6 +1,7 @@
 package com.tutorial.tutorialopencv;
 
 import android.content.Context;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -65,5 +66,58 @@ public class PacientesDbAdapter extends Object {
             c.moveToFirst();
         }
         return c;
+    }
+
+    public long delete(long id)
+    {
+        if (db == null)
+            abrir();
+
+        return db.delete(P_TABLA, "_id=" + id, null);
+    }
+
+    /**
+     * Inserta los valores en un registro de la tabla
+     */
+    public long insert(ContentValues reg)
+    {
+        if (db == null)
+            abrir();
+
+        return db.insert(P_TABLA, null, reg);
+    }
+
+    public PacientesDbAdapter abrir() throws SQLException
+    {
+        dbHelper = new dbHelper(context);
+        db = dbHelper.getWritableDatabase();
+        return this;
+    }
+
+    /**
+     * Modificar el registro
+     */
+    public long update(ContentValues reg)
+    {
+        long result = 0;
+
+        if (db == null)
+            abrir();
+
+        if (reg.containsKey(P_COLUMNA_ID))
+        {
+            //
+            // Obtenemos el id y lo borramos de los valores
+            //
+            long id = reg.getAsLong(P_COLUMNA_ID);
+
+            reg.remove(P_COLUMNA_ID);
+
+            //
+            // Actualizamos el registro con el identificador que hemos extraido
+            //
+            result = db.update(P_TABLA, reg, "_id=" + id, null);
+        }
+        return result;
     }
 }

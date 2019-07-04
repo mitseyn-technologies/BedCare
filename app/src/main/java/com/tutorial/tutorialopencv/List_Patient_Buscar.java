@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
 
-public class List_Patient extends ListActivity {
+public class List_Patient_Buscar extends ListActivity {
 
     public static final String P_MODO  = "modo" ;
     public static final int P_VISUALIZAR = 551 ;
@@ -21,7 +21,7 @@ public class List_Patient extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_patient);
+        setContentView(R.layout.activity_list_patient_buscar);
 
         lista =  findViewById(android.R.id.list);
 
@@ -43,7 +43,7 @@ public class List_Patient extends ListActivity {
     private void visualizar(long id)
     {
         // Llamamos a la Actividad HipotecaFormulario indicando el modo visualización y el identificador del registro
-        Intent i = new Intent(List_Patient.this, ShowPatient.class);
+        Intent i = new Intent(List_Patient_Buscar.this, ShowPatient.class);
         i.putExtra(P_MODO, P_VISUALIZAR);
         i.putExtra(PacientesDbAdapter.P_COLUMNA_ID, id);
 
@@ -67,7 +67,7 @@ public class List_Patient extends ListActivity {
 
     private void go_ToMenuMatient()
     {
-        Intent to_MenuPatient = new Intent(List_Patient.this,Menu_Patient.class);
+        Intent to_MenuPatient = new Intent(List_Patient_Buscar.this,Menu_Patient.class);
         startActivity(to_MenuPatient);
         this.finish();
     }

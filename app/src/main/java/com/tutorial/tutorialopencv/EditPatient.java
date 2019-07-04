@@ -1,7 +1,7 @@
 package com.tutorial.tutorialopencv;
 
-import android.content.Intent;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AddPatient extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+public class EditPatient extends AppCompatActivity {
 
     private EditText medico, fecha,nombre,apellido,cedula,edad,postracion,observacions;
-    private Button btnIngresarPaciente, btnCancelarIngreso;
+    private Button btnGuardarCambios, btnCancelarCambios;
     private Pacientes paciente, p_New;
     private PacientesDbAdapter dbAdapter;
     private Cursor cursor;
@@ -31,8 +33,7 @@ public class AddPatient extends AppCompatActivity {
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
-        setContentView(R.layout.add_patient);
-        //setTitle(R.string.addPatient);
+        setContentView(R.layout.edit_patient);
 
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
@@ -47,6 +48,9 @@ public class AddPatient extends AppCompatActivity {
         {
             id = extra.getLong(PacientesDbAdapter.P_COLUMNA_ID);
         }
+
+        //Cargamos los datos anteriores
+        ObtenerDatos(id);
 
         //Establecemos el modo del formulario
         establecerModo(extra.getInt(Menu_Patient.P_MODO));
@@ -63,8 +67,8 @@ public class AddPatient extends AppCompatActivity {
         observacions = findViewById(R.id.edit_observacion);
         postracion = findViewById(R.id.edit_causa);
 
-        btnIngresarPaciente = findViewById(R.id.btnCancelar);
-        btnCancelarIngreso = findViewById(R.id.btnGuardarCambios);
+        btnGuardarCambios = findViewById(R.id.btnCancelar);
+        btnCancelarCambios = findViewById(R.id.btnGuardarCambios);
 
         dbAdapter = new PacientesDbAdapter(this);
         dbAdapter.open();
@@ -72,7 +76,7 @@ public class AddPatient extends AppCompatActivity {
 
     private void ActionsElements()
     {
-        btnIngresarPaciente.setOnClickListener(new View.OnClickListener() {
+        btnGuardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 guardar();
@@ -80,7 +84,7 @@ public class AddPatient extends AppCompatActivity {
             }
         });
 
-        btnCancelarIngreso.setOnClickListener(new View.OnClickListener() {
+        btnCancelarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cancelar();
@@ -88,9 +92,21 @@ public class AddPatient extends AppCompatActivity {
         });
     }
 
+    private void ObtenerDatos(long id)
+    {
+        //Obtenemos los datos del formulario
+        ContentValues reg = new ContentValues();
+
+        //Se obtiene el objeto
+        reg.get(PacientesDbAdapter.P_COLUMNA_NOMBRE);
+        //Ahora ha yque sacar el nombre dentro de dicho objeto
+    }
+
+
+
     private void establecerModo(int m)
     {
-        this.modo = Menu_Patient.P_CREAR;
+        this.modo = Menu_Patient.P_EDITAR;
         this.setTitle(nombre.getText().toString());
         this.setEdicion(true);
     }
@@ -121,10 +137,10 @@ public class AddPatient extends AppCompatActivity {
         reg.put(PacientesDbAdapter.P_COLUMNA_OBSERVACION, observacions.getText().toString());
         reg.put(PacientesDbAdapter.P_COLUMNA_CAUSA, postracion.getText().toString());
 
-        if(modo == Menu_Patient.P_CREAR)
+        if(modo == Menu_Patient.P_EDITAR)
         {
-            dbAdapter.insert(reg);
-            Toast.makeText(this, R.string.crear_confirmacion, Toast.LENGTH_SHORT).show();
+            dbAdapter.update(reg);
+            Toast.makeText(this, R.string.editar_confirmacion, Toast.LENGTH_SHORT).show();
         }
 
         //Devolvemos el control
@@ -140,7 +156,7 @@ public class AddPatient extends AppCompatActivity {
 
     private void go_ToMenuPatient()
     {
-        Intent to_MenuPatient = new Intent(AddPatient.this,Menu_Patient.class);
+        Intent to_MenuPatient = new Intent(EditPatient.this,Menu_Patient.class);
         startActivity(to_MenuPatient);
         this.finish();
     }

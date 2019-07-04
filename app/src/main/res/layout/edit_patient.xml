@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    android:label="@string/">
+    android:background="@color/colorPrimary">
 
 
     <TextView
@@ -262,7 +261,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/cancel"
+        android:text="@string/saveChanges"
         android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline7"
@@ -279,7 +278,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/addPatient"
+        android:text="@string/cancel"
         android:textColor="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline6"

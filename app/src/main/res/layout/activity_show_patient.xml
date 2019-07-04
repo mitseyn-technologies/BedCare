@@ -25,17 +25,17 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="341dp"
-        android:layout_height="568dp"
+        android:layout_width="344dp"
+        android:layout_height="540dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorText"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/btnState"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        android:background="@color/colorText">
+        app:layout_constraintStart_toStartOf="@+id/guideline">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -301,14 +301,24 @@
 
     <Button
         android:id="@+id/btnState"
-        android:layout_width="162dp"
-        android:layout_height="46dp"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:text="@string/statePatient"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
+        android:background="#EBCA3131"
+        android:text="@string/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.Guideline

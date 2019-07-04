@@ -10,7 +10,10 @@ import android.widget.Toast;
 
 public class Menu_Patient extends AppCompatActivity {
 
-    private Button btn_Search,btn_Edit,btn_Create,btn_delete;
+    private Button btn_Search,btn_Edit,btn_Create,btn_Delete;
+    public static final int P_CREAR = 552;
+    public static final int P_EDITAR = 553 ;
+    public static final String P_MODO = "modo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +31,13 @@ public class Menu_Patient extends AppCompatActivity {
         btn_Search  =findViewById(R.id.searchPatient);
         btn_Create =findViewById(R.id.addPatient);
         btn_Edit = findViewById(R.id.editPatient);
-        btn_delete =findViewById(R.id.deletePatient);
+        btn_Delete =findViewById(R.id.deletePatient);
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-
-        Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_LONG).show();
-
+        Toast.makeText(getBaseContext(), "Base de datos preparada", Toast.LENGTH_SHORT).show();
     }
 
     private void ActiosElement()
@@ -55,12 +56,29 @@ public class Menu_Patient extends AppCompatActivity {
                 go_ToListPatient();
             }
         });
+
+        btn_Delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                go_ToListPatientDelete();
+            }
+        });
+
+        btn_Edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                go_ToListPatientEdit();
+            }
+        });
     }
 
     private void go_ToAddPatient()
     {
         Intent to_AddPatient = new Intent(Menu_Patient.this, AddPatient.class);
         startActivity(to_AddPatient);
+        Intent i = new Intent(Menu_Patient.this, AddPatient.class);
+        i.putExtra(P_MODO, P_CREAR);
+        startActivityForResult(i, P_CREAR);
         this.finish();
     }
 
@@ -72,7 +90,19 @@ public class Menu_Patient extends AppCompatActivity {
     }
     private void go_ToListPatient()
     {
-        Intent to_ListPatient = new Intent(Menu_Patient.this,List_Patient.class);
+        Intent to_ListPatient = new Intent(Menu_Patient.this, List_Patient_Buscar.class);
+        startActivity(to_ListPatient);
+        this.finish();
+    }
+    private void go_ToListPatientDelete()
+    {
+        Intent to_ListPatient = new Intent(Menu_Patient.this, List_Patient_Eliminar.class);
+        startActivity(to_ListPatient);
+        this.finish();
+    }
+    private void go_ToListPatientEdit()
+    {
+        Intent to_ListPatient = new Intent(Menu_Patient.this, List_Patient_Editar.class);
         startActivity(to_ListPatient);
         this.finish();
     }

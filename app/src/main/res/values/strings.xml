@@ -37,8 +37,17 @@
 
     <string name="statePatient">Estado Paciente</string>
 
+    <string name="eliminar_titulo">Eliminar Paciente</string>
+    <string name="eliminar_mensaje">¿Seguro que desea eliminar estos datos?</string>
+    <string name="eliminar_confirmacion">Datos del paciente eliminados</string>
 
+    <string name="crear_titulo">Nuevo Paciente</string>
+    <string name="crear_confirmacion">Paciente agregado</string>
 
+    <string name="editar_titulo">Editar Paciente</string>
+    <string name="editar_confirmacion">Paciente modificado</string>
+
+    <string name="saveChanges">Guardar cambios</string>
 
 
 </resources>
