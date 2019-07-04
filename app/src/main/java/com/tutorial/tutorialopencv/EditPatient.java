@@ -121,6 +121,17 @@ public class EditPatient extends AppCompatActivity {
         medico.setEnabled(opcion);
         observacions.setEnabled(opcion);
         postracion.setEnabled(opcion);
+
+        cursor = dbAdapter.getRegistro(id);
+        nombre.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_APELLIDO)));
+        apellido.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_APELLIDO)));
+        cedula.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_CEDULA)));
+        edad.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_EDAD)));
+        fecha.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_FECHA)));
+        medico.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_MEDICO)));
+        observacions.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_OBSERVACION)));
+        postracion.setText(cursor.getString(cursor.getColumnIndex(PacientesDbAdapter.P_COLUMNA_CAUSA)));
+
     }
 
     private void guardar()

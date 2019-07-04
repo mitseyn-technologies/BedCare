@@ -7,6 +7,7 @@
     <string name="estado">Estado de la conexión:</string>
 
     <string name="pacientes">Pacientes</string>
+    <string name="listpacientes">Menu Pacientes</string>
     <string name="config">Configuración</string>
     <string name="mainmenu">Menu BedCare</string>
     <string name="menuPatient">Menu Pacientes</string>

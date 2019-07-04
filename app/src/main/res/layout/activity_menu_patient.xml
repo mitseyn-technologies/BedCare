@@ -4,72 +4,136 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLight"
     tools:context=".Menu_Patient">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="394dp"
-        android:layout_height="392dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="164dp"
-        android:orientation="vertical"
+        android:id="@+id/linearLayout4"
+        android:layout_width="345dp"
+        android:layout_height="191dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="140dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="189dp"
+            android:layout_height="174dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/searchPatient"
+                android:layout_width="130dp"
+                android:layout_height="121dp"
+                android:backgroundTint="#61FFFFFF"
+                android:cropToPadding="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/iconobuscar" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:text="@string/search"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="161dp"
+            android:layout_height="174dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/addPatient"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:backgroundTint="#61FFFFFF"
+                android:cropToPadding="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/adduser" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/add"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="341dp"
+        android:layout_height="210dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-        <Button
-            android:id="@+id/searchPatient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="@string/search"
-            android:textColor="@color/colorText"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="189dp"
+            android:layout_height="190dp"
+            android:baselineAligned="true"
+            android:orientation="vertical"
+            android:textAlignment="center">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            <ImageButton
+                android:id="@+id/editPatient"
+                android:layout_width="138dp"
+                android:layout_height="118dp"
+                android:backgroundTint="#61FFFFFF"
+                android:cropToPadding="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/edituser" />
 
-        <Button
-            android:id="@+id/addPatient"
-            android:layout_width="411dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="@string/add"
-            android:textColor="@color/colorText"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="152dp"
+                android:layout_height="58dp"
+                android:text="@string/edit"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+        <LinearLayout
+            android:layout_width="208dp"
+            android:layout_height="189dp"
+            android:baselineAligned="true"
+            android:orientation="vertical"
+            android:textAlignment="center">
 
-        <Button
-            android:id="@+id/editPatient"
-            android:layout_width="416dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="@string/edit"
-            android:textColor="@color/colorText"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/deletePatient"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:backgroundTint="#61FFFFFF"
+                android:cropToPadding="true"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/deleteuser" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="48dp" />
-
-        <Button
-            android:id="@+id/deletePatient"
-            android:layout_width="411dp"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="@string/delete"
-            android:textColor="@color/colorText"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="149dp"
+                android:layout_height="wrap_content"
+                android:text="@string/delete"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

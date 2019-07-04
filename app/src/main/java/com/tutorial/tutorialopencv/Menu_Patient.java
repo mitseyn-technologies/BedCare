@@ -1,19 +1,25 @@
 package com.tutorial.tutorialopencv;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class Menu_Patient extends AppCompatActivity {
 
-    private Button btn_Search,btn_Edit,btn_Create,btn_Delete;
+    private ImageButton btn_Search,btn_Edit,btn_Create,btn_Delete;
+    private Vibrator vibrator;
+
     public static final int P_CREAR = 552;
     public static final int P_EDITAR = 553 ;
     public static final String P_MODO = "modo";
+    public long tiempo = 100; //en milisegundos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,7 @@ public class Menu_Patient extends AppCompatActivity {
         btn_Create =findViewById(R.id.addPatient);
         btn_Edit = findViewById(R.id.editPatient);
         btn_Delete =findViewById(R.id.deletePatient);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         dbHelper dbHelper = new dbHelper(getBaseContext());
 
@@ -46,20 +53,29 @@ public class Menu_Patient extends AppCompatActivity {
         btn_Create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                go_ToAddPatient();
+                if (vibrator.hasVibrator()) {
+                    vibrator.vibrate(tiempo);
+                }
+                    go_ToAddPatient();
+
             }
         });
 
         btn_Search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                go_ToListPatient();
+                if (vibrator.hasVibrator()) {
+                    vibrator.vibrate(tiempo);
+                } go_ToListPatient();
             }
         });
 
         btn_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (vibrator.hasVibrator()) {
+                    vibrator.vibrate(tiempo);
+                }
                 go_ToListPatientDelete();
             }
         });
@@ -67,6 +83,9 @@ public class Menu_Patient extends AppCompatActivity {
         btn_Edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (vibrator.hasVibrator()) {
+                    vibrator.vibrate(tiempo);
+                }
                 go_ToListPatientEdit();
             }
         });

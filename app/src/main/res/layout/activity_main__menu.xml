@@ -4,17 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLight"
     tools:context=".Main_Menu">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="362dp"
+        android:layout_height="133dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.013"
+        app:srcCompat="@drawable/bedcare" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="391dp"
-        android:layout_height="370dp"
+        android:layout_width="329dp"
+        android:layout_height="416dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <Button
             android:id="@+id/btnPacientes"
@@ -23,12 +43,12 @@
             android:background="@color/colorAccent"
             android:text="@string/pacientes"
             android:textColor="@color/colorText"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="73dp" />
+            android:layout_height="35dp" />
 
         <Button
             android:id="@+id/btnNotifications"
@@ -37,26 +57,26 @@
             android:background="@color/colorAccent"
             android:text="@string/notifications"
             android:textColor="@color/colorText"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="55dp" />
+            android:layout_height="35dp" />
 
         <Button
             android:id="@+id/btnPacientes2"
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:background="@color/colorAccent"
-            android:text="@string/pacientes"
+            android:text="Historial"
             android:textColor="@color/colorText"
-            android:textSize="18sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="55dp" />
+            android:layout_height="35dp" />
 
         <Button
             android:id="@+id/btnConfig"
@@ -65,7 +85,7 @@
             android:background="@color/colorAccent"
             android:text="@string/config"
             android:textColor="@color/colorText"
-            android:textSize="24sp"
+            android:textSize="20dp"
             android:textStyle="bold" />
 
     </LinearLayout>
